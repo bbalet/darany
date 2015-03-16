@@ -1,0 +1,22 @@
+SetEnv ALLOW_OVERWRITE On
+DirectoryIndex index.php
+
+<IfModule mod_rewrite.c>
+    Options +FollowSymLinks
+    RewriteEngine On
+    
+    # Tell PHP that the mod_rewrite module is ENABLED.
+    SetEnv HTTP_MOD_REWRITE On
+
+    #Remove index.php from URL
+    RewriteCond $1 !^(index\.php|(.*)\.images|css|js|robots\.txt|favicon\.ico)
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ ./index.php?$1 [L,QSA]
+</IfModule>
+ 
+<IfModule !mod_rewrite.c> 
+    # Without mod_rewrite, route 404's to the front controller
+    SetEnv HTTP_MOD_REWRITE Off
+    ErrorDocument 404 "Error : Module rewrite is not available check your system with requirements.php"
+ </IfModule>
