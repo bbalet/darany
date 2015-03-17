@@ -64,31 +64,6 @@ class Users_model extends CI_Model {
     }
     
     /**
-     * Get the list of employees belonging to an entity
-     * @param int $id identifier of the entity
-     * @return array record of users
-     * @author Benjamin BALET <benjamin.balet@gmail.com>
-     */
-    public function get_employees_entity($id = 0) {
-        $query = $this->db->get_where('users', array('organization' => $id));
-        return $query->result_array();
-    }
-    
-    /**
-     * Get the list of employees that are the collaborators of the given user
-     * @param int $id identifier of the manager
-     * @return array record of users
-     * @author Benjamin BALET <benjamin.balet@gmail.com>
-     */
-    public function get_employees_manager($id = 0) {
-        $this->db->from('users');
-        $this->db->order_by("lastname", "asc");
-        $this->db->order_by("firstname", "asc");
-        $this->db->where('manager', $id);
-        $query = $this->db->get();
-        return $query->result_array();
-    }
-    /**
      * Check if a login can be used before creating the user
      * @param type $login login identifier
      * @return bool true if available, false otherwise
@@ -113,12 +88,6 @@ class Users_model extends CI_Model {
      */
     public function delete_user($id) {
         $query = $this->db->delete('users', array('id' => $id));
-        //Cascade delete line manager role
-        $data = array(
-            'manager' => NULL
-        );
-        $this->db->where('manager', $id);
-        $this->db->update('users', $data);
     }
 
     /**
@@ -146,21 +115,10 @@ class Users_model extends CI_Model {
             'email' => $this->input->post('email'),
             'password' => $hash,
             'role' => $role,
-            'manager' => $this->input->post('manager'),
-            'position' => $this->input->post('position'),
             'language' => $this->input->post('language')
         );
         $this->db->insert('users', $data);
         
-        //Deal with user having no line manager
-        if ($this->input->post('manager') == -1) {
-            $id = $this->db->insert_id();
-            $data = array(
-                'manager' => $id
-            );
-            $this->db->where('id', $id);
-            $this->db->update('users', $data);
-        }
         return $password;
     }
 
@@ -178,13 +136,6 @@ class Users_model extends CI_Model {
             $role = $role | $role_bit;
         }
         
-        //Deal with user having no line manager
-        if ($this->input->post('manager') == -1) {
-            $manager = $this->input->post('id');
-        } else {
-            $manager = $this->input->post('manager');
-        }
-        
         if ($this->input->post('datehired') == "") {
             $datehired = NULL;
         } else {
@@ -197,8 +148,6 @@ class Users_model extends CI_Model {
             'login' => $this->input->post('login'),
             'email' => $this->input->post('email'),
             'role' => $role,
-            'manager' => $manager,
-            'position' => $this->input->post('position'),
             'language' => $this->input->post('language')
         );
 
@@ -300,7 +249,6 @@ class Users_model extends CI_Model {
                     'firstname' => $row->firstname,
                     'lastname' => $row->lastname,
                     'is_admin' => $is_admin,
-                    'manager' => $row->manager,
                     'logged_in' => TRUE
                 );                
                 $this->session->set_userdata($newdata);
@@ -370,59 +318,9 @@ class Users_model extends CI_Model {
             'firstname' => $row->firstname,
             'lastname' => $row->lastname,
             'is_admin' => $is_admin,
-            'manager' => $row->manager,
             'logged_in' => TRUE
         );
         $this->session->set_userdata($newdata);
-    }
-
-    /**
-     * Get the list of employees or one employee
-     * @param int $id optional id of one user
-     * @return array record of users
-     * @author Benjamin BALET <benjamin.balet@gmail.com>
-     */
-    public function get_employees($id = 0) {
-        if ($id === 0) {
-            $this->db->select('users.id as id,'
-                        . ' users.firstname as firstname,'
-                        . ' users.lastname as lastname,'
-                        . ' users.email as email,'
-                        . ' managers.firstname as manager_firstname,'
-                        . ' managers.lastname as manager_lastname');
-            $this->db->from('users');
-            $this->db->join('users as managers', 'managers.id = users.manager', 'left outer');
-            return $this->db->get()->result_array();
-        } else {
-            $this->db->select('users.id as id,'
-                        . ' users.firstname as firstname,'
-                        . ' users.lastname as lastname,'
-                        . ' users.email as email');
-            $this->db->from('users');
-            $this->db->where('users.id = ', $id);
-        return $this->db->get()->row_array();
-        }
-    }
-    
-    /**
-     * Update a given employee in the database with the manager ID. 
-     * @return type
-     * @author Benjamin BALET <benjamin.balet@gmail.com>
-     */
-    public function set_manager() {
-        $data = array(
-            'manager' => $this->input->post('manager')
-        );
-        $this->db->where('id', $this->input->post('id'));
-        $result = $this->db->update('users', $data);
-        
-        //Trace the modification if the feature is enabled
-        if ($this->config->item('enable_history') == TRUE) {
-            $this->load->model('history_model');
-            $this->history_model->set_history(2, 'users', $id, $this->session->userdata('id'));
-        }
-        
-        return $result;
     }
     
     /**

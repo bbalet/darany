@@ -35,7 +35,7 @@ class Users extends CI_Controller {
         }
         $this->load->model('users_model');
         $this->fullname = $this->session->userdata('firstname') . ' ' . $this->session->userdata('lastname');
-        $this->is_hr = $this->session->userdata('is_hr');
+        $this->is_admin = $this->session->userdata('is_admin');
         $this->user_id = $this->session->userdata('id');
         $this->language = $this->session->userdata('language');
         $this->language_code = $this->session->userdata('language_code');
@@ -50,7 +50,7 @@ class Users extends CI_Controller {
      */
     private function getUserContext() {
         $data['fullname'] = $this->fullname;
-        $data['is_hr'] = $this->is_hr;
+        $data['is_admin'] = $this->is_admin;
         $data['user_id'] = $this->user_id;
         $data['language'] = $this->language;
         $data['language_code'] =  $this->language_code;
@@ -70,30 +70,6 @@ class Users extends CI_Controller {
         $this->load->view('templates/header', $data);
         $this->load->view('menu/index', $data);
         $this->load->view('users/index', $data);
-        $this->load->view('templates/footer');
-    }
-    
-    /**
-     * Display details of the connected user (contract, line manager, etc.)
-     * @author Benjamin BALET <benjamin.balet@gmail.com>
-     */
-    public function myprofile() {
-        $this->auth->check_is_granted('view_myprofile');
-        $data = $this->getUserContext();
-        $data['user'] = $this->users_model->get_users($this->user_id);
-        if (empty($data['user'])) {
-            show_404();
-        }
-        $this->expires_now();
-        $data['title'] = lang('users_myprofile_html_title');
-        $this->load->model('roles_model');
-        $this->load->model('positions_model');
-        $data['roles'] = $this->roles_model->get_roles();
-        $data['manager_label'] = $this->users_model->get_label($data['user']['manager']);
-        $data['position_label'] = $this->positions_model->get_label($data['user']['position']);
-        $this->load->view('templates/header', $data);
-        $this->load->view('menu/index', $data);
-        $this->load->view('users/myprofile', $data);
         $this->load->view('templates/footer');
     }
 
@@ -125,10 +101,7 @@ class Users extends CI_Controller {
         }
         $data['title'] = lang('users_view_html_title');
         $this->load->model('roles_model');
-        $this->load->model('positions_model');
         $data['roles'] = $this->roles_model->get_roles();
-        $data['manager_label'] = $this->users_model->get_label($data['user']['manager']);
-        $data['position_label'] = $this->positions_model->get_label($data['user']['position']);
         $this->load->view('templates/header', $data);
         $this->load->view('menu/index', $data);
         $this->load->view('users/view', $data);
@@ -153,12 +126,6 @@ class Users extends CI_Controller {
         $this->form_validation->set_rules('login', lang('users_edit_field_login'), 'required|xss_clean');
         $this->form_validation->set_rules('email', lang('users_edit_field_email'), 'required|xss_clean');
         $this->form_validation->set_rules('role', lang('users_edit_field_role'), 'required|xss_clean');
-        $this->form_validation->set_rules('manager', lang('users_edit_field_manager'), 'required|xss_clean');
-        $this->form_validation->set_rules('contract', lang('users_edit_field_contract'), 'xss_clean');
-        $this->form_validation->set_rules('entity', lang('users_edit_field_entity'), 'xss_clean');
-        $this->form_validation->set_rules('position', lang('users_edit_field_position'), 'xss_clean');
-        $this->form_validation->set_rules('datehired', lang('users_edit_field_hired'), 'xss_clean');
-        $this->form_validation->set_rules('identifier', lang('users_edit_field_identifier'), 'xss_clean');
         $this->form_validation->set_rules('language', lang('users_edit_field_language'), 'xss_clean');
         
         $data['users_item'] = $this->users_model->get_users($id);
@@ -168,9 +135,6 @@ class Users extends CI_Controller {
 
         if ($this->form_validation->run() === FALSE) {
             $this->load->model('roles_model');
-            $this->load->model('positions_model');
-            $data['manager_label'] = $this->users_model->get_label($data['users_item']['manager']);
-            $data['position_label'] = $this->positions_model->get_label($data['users_item']['position']);
             $data['roles'] = $this->roles_model->get_roles();
             $this->load->view('templates/header', $data);
             $this->load->view('menu/index', $data);
@@ -261,11 +225,11 @@ class Users extends CI_Controller {
                 
                 //Inform back the user by flash message
                 $this->session->set_flashdata('msg', lang('users_reset_flash_msg_success'));
-                if ($this->is_hr) {
+                if ($this->is_admin) {
                     redirect('users');
                 }
                 else {
-                    redirect('home');
+                    redirect(base_url());
                 }
             }
         }
@@ -291,12 +255,6 @@ class Users extends CI_Controller {
         $this->form_validation->set_rules('email', lang('users_create_field_email'), 'required|xss_clean');
         $this->form_validation->set_rules('password', lang('users_create_field_password'), 'required');
         $this->form_validation->set_rules('role[]', lang('users_create_field_role'), 'required|xss_clean');
-        $this->form_validation->set_rules('manager', lang('users_create_field_manager'), 'required|xss_clean');
-        $this->form_validation->set_rules('contract', lang('users_create_field_contract'), 'xss_clean');
-        $this->form_validation->set_rules('position', lang('users_create_field_position'), 'xss_clean');
-        $this->form_validation->set_rules('entity', lang('users_create_field_entity'), 'xss_clean');
-        $this->form_validation->set_rules('datehired', lang('users_create_field_hired'), 'xss_clean');
-        $this->form_validation->set_rules('identifier', lang('users_create_field_identifier'), 'xss_clean');
         $this->form_validation->set_rules('language', lang('users_create_field_language'), 'xss_clean');
 
         if ($this->form_validation->run() === FALSE) {
@@ -382,7 +340,6 @@ class Users extends CI_Controller {
         $this->excel->getActiveSheet()->setCellValue('B1', lang('users_export_thead_firstname'));
         $this->excel->getActiveSheet()->setCellValue('C1', lang('users_export_thead_lastname'));
         $this->excel->getActiveSheet()->setCellValue('D1', lang('users_export_thead_email'));
-        $this->excel->getActiveSheet()->setCellValue('E1', lang('users_export_thead_manager'));
         
         $this->excel->getActiveSheet()->getStyle('A1:E1')->getFont()->setBold(true);
         $this->excel->getActiveSheet()->getStyle('A1:E1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
@@ -394,7 +351,6 @@ class Users extends CI_Controller {
             $this->excel->getActiveSheet()->setCellValue('B' . $line, $user['firstname']);
             $this->excel->getActiveSheet()->setCellValue('C' . $line, $user['lastname']);
             $this->excel->getActiveSheet()->setCellValue('D' . $line, $user['email']);
-            $this->excel->getActiveSheet()->setCellValue('E' . $line, $user['manager']);
             $line++;
         }
 

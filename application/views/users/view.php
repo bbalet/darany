@@ -42,12 +42,6 @@ $this->lang->load('global', $language);?>
         <option value="<?php echo $roles_item['id']; ?>" <?php if ((((int)$roles_item['id']) & ((int) $user['role']))) echo "selected"; ?>><?php echo $roles_item['name']; ?></option>
     <?php endforeach ?>
     </select>
-
-    <label for="manager"><?php echo lang('users_view_field_manager');?></label>
-    <input type="text" name="manager" value="<?php echo $manager_label; ?>" readonly /><br />
-    
-    <label for="position"><?php echo lang('users_view_field_position');?></label>
-    <input type="text" name="position" value="<?php echo $position_label; ?>" readonly /><br />
     
     <label for="language"><?php echo lang('users_create_field_language');?></label>
     <select name="language" readonly>

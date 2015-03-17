@@ -65,6 +65,7 @@ $route['locations/(:num)/rooms/create'] = 'rooms/create/$1';
 $route['locations/(:num)/rooms/(:num)/delete'] = 'rooms/delete/$1/$2';
 $route['locations/(:num)/rooms/export'] = 'rooms/export/$1';
 
+$route['rooms/book/(:num)'] = 'rooms/book/$1';
 $route['rooms/qrcode/(:num)'] = 'rooms/qrcode/$1';
 $route['rooms/status/(:num)'] = 'rooms/status/$1';
 $route['rooms/timeslots/(:num)'] = 'rooms/timeslots/$1';

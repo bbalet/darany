@@ -59,7 +59,10 @@ $(document).ready(function() {
                 <a href="<?php echo base_url();?>locations/<?php echo $room['id']; ?>/rooms"><?php echo lang('rooms_index_thead_link_rooms');?></a>&nbsp;
                 <a href="<?php echo base_url();?>rooms/timeslots/<?php echo $room['id'];?>" title="<?php echo lang('rooms_index_tooltip_timeslot');?>"><i class="icon-list-alt"></i></a>&nbsp;
                 <a href="<?php echo base_url();?>rooms/calendar/<?php echo $room['id'];?>" title="<?php echo lang('rooms_index_tooltip_calendar');?>"><i class="icon-calendar"></i></a>&nbsp;
-                <a href="#frmQRCode" data-id="<?php echo $room['id'];?>" role="button" data-toggle="modal" title="<?php echo lang('rooms_index_thead_tip_qrcode');?>"><i class="icon-qrcode"></i></a>
+                <a href="#frmQRCode" data-id="<?php echo $room['id'];?>" role="button" data-toggle="modal" title="<?php echo lang('rooms_index_thead_tip_qrcode');?>"><i class="icon-qrcode"></i></a>&nbsp;
+                
+                
+                <a href="<?php echo base_url();?>rooms/book/<?php echo $room['id'];?>" title="<?php echo lang('rooms_index_tooltip_book');?>"><i class="icon-book"></i></a>&nbsp;
                 
                 <?php if ($room['free']) { ?>
                 <a href="<?php echo base_url();?>rooms/status/<?php echo $room['id'];?>" title="<?php echo lang('rooms_index_tooltip_available');?>"><i class="icon-ok-circle"></i></a>&nbsp;
