@@ -35,5 +35,5 @@
     <br /><br />
     <button type="submit" class="btn btn-primary"><i class="icon-ok icon-white"></i>&nbsp;<?php echo lang('locations_edit_button_update');?></button>
     &nbsp;
-    <a href="<?php echo base_url();?>positions" class="btn btn-danger"><i class="icon-remove icon-white"></i>&nbsp;<?php echo lang('locations_edit_button_cancel');?></a>
+    <a href="<?php echo base_url();?>locations" class="btn btn-danger"><i class="icon-remove icon-white"></i>&nbsp;<?php echo lang('locations_edit_button_cancel');?></a>
 </form>

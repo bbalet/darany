@@ -62,11 +62,15 @@ $route['locations'] = 'locations';
 //Rooms
 $route['locations/(:num)/rooms'] = 'rooms/index/$1';
 $route['locations/(:num)/rooms/create'] = 'rooms/create/$1';
+$route['locations/(:num)/rooms/(:num)/delete'] = 'rooms/delete/$1/$2';
+$route['locations/(:num)/rooms/export'] = 'rooms/export/$1';
+
 $route['rooms/qrcode/(:num)'] = 'rooms/qrcode/$1';
 $route['rooms/status/(:num)'] = 'rooms/status/$1';
 $route['rooms/timeslots/(:num)'] = 'rooms/timeslots/$1';
 $route['rooms/calendar/(:num)'] = 'rooms/calendar/$1';
 $route['rooms/calfeed/(:num)'] = 'rooms/calfeed/$1';
+
 
 
 //Session management

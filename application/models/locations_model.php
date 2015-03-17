@@ -56,12 +56,12 @@ class Locations_model extends CI_Model {
     }
     
     /**
-     * Delete a leave type from the database
-     * @param int $id identifier of the leave type record
+     * Delete a location from the database
+     * @param int $id identifier of the location
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
-    public function delete_type($id) {
-        $query = $this->db->delete('types', array('id' => $id));
+    public function delete_location($id) {
+        $query = $this->db->delete('locations', array('id' => $id));
     }
     
     /**

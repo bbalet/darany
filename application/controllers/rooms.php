@@ -98,8 +98,6 @@ class Rooms extends CI_Controller {
         $this->auth->check_is_granted('rooms_list');
         $data = $this->getUserContext();
         $data['room'] = $this->rooms_model->get_room($room);
-        //$this->load->model('locations_model');
-        //$data['location'] = $this->locations_model->get_locations($data['room']['location']);
         $data['title'] = lang('rooms_index_title');
         $this->load->view('templates/header', $data);
         $this->load->view('menu/index', $data);
@@ -138,28 +136,32 @@ class Rooms extends CI_Controller {
     }
     
     /**
-     * Display a form that allows adding a position
+     * Display a form that allows adding a meeting room to a location
+     * @param int $location Identifier of the location
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
-    public function create() {
-        $this->auth->check_is_granted('create_positions');
+    public function create($location) {
+        $this->auth->check_is_granted('rooms_create');
         $data = $this->getUserContext();
         $this->load->helper('form');
         $this->load->library('form_validation');
-        $data['title'] = lang('positions_create_title');
-        
-        $this->form_validation->set_rules('name', lang('positions_create_field_name'), 'required|xss_clean');
-        $this->form_validation->set_rules('description', lang('positions_create_field_description'), 'xss_clean');
+        $data['title'] = lang('rooms_create_title');
+        $data['location'] = $location;
+
+        $this->form_validation->set_rules('name', lang('rooms_create_field_name'), 'required|xss_clean');
+        $this->form_validation->set_rules('manager', lang('rooms_create_field_manager'), 'required|xss_clean');
+        $this->form_validation->set_rules('floor', lang('rooms_create_field_floor'), 'xss_clean');
+        $this->form_validation->set_rules('description', lang('rooms_create_field_description'), 'xss_clean');
         
         if ($this->form_validation->run() === FALSE) {
             $this->load->view('templates/header', $data);
             $this->load->view('menu/index', $data);
-            $this->load->view('positions/create', $data);
+            $this->load->view('rooms/create', $data);
             $this->load->view('templates/footer');
         } else {
-            $this->positions_model->set_positions();
-            $this->session->set_flashdata('msg', lang('positions_create_flash_msg'));
-            redirect('positions');
+            $this->rooms_model->set_rooms($location);
+            $this->session->set_flashdata('msg', lang('rooms_create_flash_msg'));
+            redirect('locations/' . $location . '/rooms');
         }
     }
 
@@ -168,7 +170,7 @@ class Rooms extends CI_Controller {
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function edit($id) {
-        $this->auth->check_is_granted('edit_positions');
+        $this->auth->check_is_granted('rooms_edit');
         $data = $this->getUserContext();
         $this->load->helper('form');
         $this->load->library('form_validation');
@@ -186,48 +188,52 @@ class Rooms extends CI_Controller {
         } else {
             $this->positions_model->update_positions($id);
             $this->session->set_flashdata('msg', lang('positions_edit_flash_msg'));
-            redirect('positions');
+            redirect('locations/' . $location . '/rooms');
         }
     }
     
     /**
-     * Action : delete a positions
-     * @param int $id position identifier
+     * Action : delete a room
+     * @param int $id room identifier
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
-    public function delete($id) {
-        $this->auth->check_is_granted('delete_positions');
-        $this->positions_model->delete_position($id);
+    public function delete($location, $room) {
+        $this->auth->check_is_granted('rooms_delete');
+        $this->rooms_model->delete_room($room);
         $this->session->set_flashdata('msg', lang('positions_delete_flash_msg'));
-        redirect('positions');
+        redirect('locations/' . $location . '/rooms');
     }
 
     /**
-     * Action: export the list of all positions into an Excel file
+     * Action: export the list of rooms attached to a given location into an Excel file
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
-    public function export() {
-        $this->auth->check_is_granted('export_positions');
+    public function export($location) {
+        $this->auth->check_is_granted('rooms_export');
         $this->expires_now();
         $this->load->library('excel');
         $this->excel->setActiveSheetIndex(0);
-        $this->excel->getActiveSheet()->setTitle(lang('positions_export_title'));
-        $this->excel->getActiveSheet()->setCellValue('A1', lang('positions_export_thead_id'));
-        $this->excel->getActiveSheet()->setCellValue('B1', lang('positions_export_thead_name'));
-        $this->excel->getActiveSheet()->setCellValue('C1', lang('positions_export_thead_description'));
-        $this->excel->getActiveSheet()->getStyle('A1:C1')->getFont()->setBold(true);
-        $this->excel->getActiveSheet()->getStyle('A1:C1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-
-        $types = $this->positions_model->get_positions();
+        $this->excel->getActiveSheet()->setTitle(lang('rooms_export_title'));
+        $this->excel->getActiveSheet()->setCellValue('A1', lang('rooms_export_thead_id'));
+        $this->excel->getActiveSheet()->setCellValue('B1', lang('rooms_export_thead_name'));
+        $this->excel->getActiveSheet()->setCellValue('C1', lang('rooms_export_thead_manager'));
+        $this->excel->getActiveSheet()->setCellValue('D1', lang('rooms_export_thead_floor'));
+        $this->excel->getActiveSheet()->setCellValue('E1', lang('rooms_export_thead_description'));
+        $this->excel->getActiveSheet()->getStyle('A1:E1')->getFont()->setBold(true);
+        $this->excel->getActiveSheet()->getStyle('A1:E1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        
+        $rooms = $this->rooms_model->get_rooms($location);
         $line = 2;
-        foreach ($types as $type) {
-            $this->excel->getActiveSheet()->setCellValue('A' . $line, $type['id']);
-            $this->excel->getActiveSheet()->setCellValue('B' . $line, $type['name']);
-            $this->excel->getActiveSheet()->setCellValue('C' . $line, $type['description']);
+        foreach ($rooms as $room) {
+            $this->excel->getActiveSheet()->setCellValue('A' . $line, $room['id']);
+            $this->excel->getActiveSheet()->setCellValue('B' . $line, $room['name']);
+            $this->excel->getActiveSheet()->setCellValue('C' . $line, $room['manager']);
+            $this->excel->getActiveSheet()->setCellValue('D' . $line, $room['floor']);
+            $this->excel->getActiveSheet()->setCellValue('E' . $line, $room['description']);
             $line++;
         }
 
-        $filename = 'positions.xls';
+        $filename = 'rooms.xls';
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="' . $filename . '"');
         header('Cache-Control: max-age=0');

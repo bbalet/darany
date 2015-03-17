@@ -40,15 +40,15 @@ $lang['locations_create_button_create'] = 'Créer l\'emplacement';
 $lang['locations_create_button_cancel'] = 'Annuler';
 $lang['locations_create_flash_msg'] = 'L\'emplacement a été créé avec succès.';
 
-$lang['locations_edit_title'] = 'Modifier le poste N°';
+$lang['locations_edit_title'] = 'Modifier l\'emplacement N°';
 $lang['locations_edit_field_name'] = 'Nom';
 $lang['locations_edit_field_description'] = 'Description';
 $lang['locations_edit_field_address'] = 'Addresse';
-$lang['locations_edit_button_update'] = 'Modifier le poste';
+$lang['locations_edit_button_update'] = 'Modifier l\'emplacement';
 $lang['locations_edit_button_cancel'] = 'Annuler';
-$lang['locations_edit_flash_msg'] = 'Le poste a été modifié avec succès.';
+$lang['locations_edit_flash_msg'] = 'L\'emplacement a été modifié avec succès.';
 
-$lang['locations_delete_flash_msg'] = 'Le poste a été supprimé avec succès.';
+$lang['locations_delete_flash_msg'] = 'L\'emplacement a été supprimé avec succès.';
 
 $lang['locations_select_thead_id'] = 'ID';
 $lang['locations_select_thead_name'] = 'Nom';

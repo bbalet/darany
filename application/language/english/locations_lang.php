@@ -26,7 +26,7 @@ $lang['locations_index_thead_tip_edit'] = 'edit';
 $lang['locations_index_thead_link_rooms'] = 'rooms';
 $lang['locations_index_button_export'] = 'Export this list';
 $lang['locations_index_button_create'] = 'Create location';
-$lang['locations_index_popup_title'] = 'Delete location';
+$lang['locations_index_popup_title'] = 'Delete a location';
 $lang['locations_index_popup_description'] = 'You are about to delete one location, this procedure is irreversible.';
 $lang['locations_index_popup_confirm'] = 'Do you want to proceed?';
 $lang['locations_index_popup_button_yes'] = 'Yes';
@@ -40,15 +40,15 @@ $lang['locations_create_button_create'] = 'Create location';
 $lang['locations_create_button_cancel'] = 'Cancel';
 $lang['locations_create_flash_msg'] = 'The location has been succesfully created.';
 
-$lang['locations_edit_title'] = 'Edit position #';
+$lang['locations_edit_title'] = 'Edit location #';
 $lang['locations_edit_field_name'] = 'Name';
 $lang['locations_edit_field_description'] = 'Description';
 $lang['locations_edit_field_address'] = 'Address';
-$lang['locations_edit_button_update'] = 'Update position';
+$lang['locations_edit_button_update'] = 'Update location';
 $lang['locations_edit_button_cancel'] = 'Cancel';
-$lang['locations_edit_flash_msg'] = 'The position has been succesfully updated.';
+$lang['locations_edit_flash_msg'] = 'The location has been succesfully updated.';
 
-$lang['locations_delete_flash_msg'] = 'The position has been succesfully deleted.';
+$lang['locations_delete_flash_msg'] = 'The location has been succesfully deleted.';
 
 $lang['locations_select_thead_id'] = 'ID';
 $lang['locations_select_thead_name'] = 'Name';

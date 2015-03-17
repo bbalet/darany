@@ -57,16 +57,14 @@ $(document).ready(function() {
                 <a href="#" class="confirm-delete" data-id="<?php echo $room['id'];?>" title="<?php echo lang('rooms_index_thead_tip_delete');?>"><i class="icon-trash"></i></a>&nbsp; 
                 <a href="<?php echo base_url();?>locations/edit/<?php echo $room['id']; ?>" title="<?php echo lang('rooms_index_thead_tip_edit');?>"><i class="icon-pencil"></i></a>
                 <a href="<?php echo base_url();?>locations/<?php echo $room['id']; ?>/rooms"><?php echo lang('rooms_index_thead_link_rooms');?></a>&nbsp;
-                
-                 
-                <a href="<?php echo base_url();?>rooms/timeslots/<?php echo $room['id'];?>" title="View timeslot"><i class="icon-list-alt"></i></a>&nbsp;
-                <a href="<?php echo base_url();?>rooms/calendar/<?php echo $room['id'];?>" title="View calendar"><i class="icon-calendar"></i></a>&nbsp;
-                <a href="#myModal" role="button" data-toggle="modal"><i class="icon-qrcode"></i></a>
+                <a href="<?php echo base_url();?>rooms/timeslots/<?php echo $room['id'];?>" title="<?php echo lang('rooms_index_tooltip_timeslot');?>"><i class="icon-list-alt"></i></a>&nbsp;
+                <a href="<?php echo base_url();?>rooms/calendar/<?php echo $room['id'];?>" title="<?php echo lang('rooms_index_tooltip_calendar');?>"><i class="icon-calendar"></i></a>&nbsp;
+                <a href="#frmQRCode" data-id="<?php echo $room['id'];?>" role="button" data-toggle="modal" title="<?php echo lang('rooms_index_thead_tip_qrcode');?>"><i class="icon-qrcode"></i></a>
                 
                 <?php if ($room['free']) { ?>
-                <a href="<?php echo base_url();?>rooms/status/<?php echo $room['id'];?>" title="The room is available"><i class="icon-ok-circle"></i></a>&nbsp;
+                <a href="<?php echo base_url();?>rooms/status/<?php echo $room['id'];?>" title="<?php echo lang('rooms_index_tooltip_available');?>"><i class="icon-ok-circle"></i></a>&nbsp;
                 <?php } else { ?>
-                <a href="<?php echo base_url();?>rooms/status/<?php echo $room['id'];?>" title="The room is already booked"><i class="icon-ban-circle"></i></a>&nbsp;
+                <a href="<?php echo base_url();?>rooms/status/<?php echo $room['id'];?>" title="<?php echo lang('rooms_index_tooltip_booked');?>"><i class="icon-ban-circle"></i></a>&nbsp;
                  <?php } ?>
                 
             </div>
@@ -82,37 +80,22 @@ $(document).ready(function() {
 	</div>
 </div>
 
-<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="frmQRCode" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="frmQRCodeLabel" aria-hidden="true">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h3>Modal header</h3>
+    <h3><?php echo lang('rooms_index_popup_qrcode_title');?></h3>
   </div>
   <div class="modal-body">
-      <p><img src="<?php echo base_url();?>rooms/qrcode/1" /></p>
+      <p><img id="imgQRCode" src="<?php echo base_url();?>assets/images/loading.gif"  /></p>
   </div>
   <div class="modal-footer">
-    <a href="#" class="btn" onclick="$('#myModal').modal('hide');">Close</a>
+    <a href="#" class="btn" onclick="$('#frmQRCode').modal('hide');"><?php echo lang('rooms_index_popup_qrcode_button_close');?></a>
   </div>
 </div>
 
-<div class="row-fluid"><div class="span12">&nbsp;</div></div>
-
-<div class="row-fluid">
-    <div class="span2">
-      <a href="<?php echo base_url();?>locations/export" class="btn btn-primary"><i class="icon-file icon-white"></i>&nbsp;<?php echo lang('rooms_index_button_export');?></a>
-    </div>
-    <div class="span3">
-      <a href="<?php echo base_url();?>locations/<?php echo $location['id']; ?>/rooms/create" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i>&nbsp;<?php echo lang('rooms_index_button_create');?></a>
-    </div>
-    <div class="span7">&nbsp;</div>
-</div>
-
-<link href="<?php echo base_url();?>assets/datatable/css/jquery.dataTables.css" rel="stylesheet">
-<script type="text/javascript" src="<?php echo base_url();?>assets/datatable/js/jquery.dataTables.min.js"></script>
-
-<div id="frmDeleteLocation" class="modal hide fade">
+<div id="frmDeleteRoom" class="modal hide fade">
     <div class="modal-header">
-        <a href="#" onclick="$('#frmDeleteLocation').modal('hide');" class="close">&times;</a>
+        <a href="#" onclick="$('#frmDeleteRoom').modal('hide');" class="close">&times;</a>
          <h3><?php echo lang('rooms_index_popup_title');?></h3>
     </div>
     <div class="modal-body">
@@ -120,10 +103,23 @@ $(document).ready(function() {
         <p><?php echo lang('rooms_index_popup_confirm');?></p>
     </div>
     <div class="modal-footer">
-        <a href="#" id="lnkDeleteLocation" class="btn danger"><?php echo lang('rooms_index_popup_button_yes');?></a>
-        <a href="#" onclick="$('#frmDeleteLocation').modal('hide');" class="btn secondary"><?php echo lang('rooms_index_popup_button_no');?></a>
+        <a href="#" id="lnkDeleteRoom" class="btn danger"><?php echo lang('rooms_index_popup_button_yes');?></a>
+        <a href="#" onclick="$('#frmDeleteRoom').modal('hide');" class="btn secondary"><?php echo lang('rooms_index_popup_button_no');?></a>
     </div>
 </div>
+
+<div class="row-fluid"><div class="span12">&nbsp;</div></div>
+
+<div class="row-fluid">
+    <div class="span12">
+      <a href="<?php echo base_url();?>locations" class="btn btn-primary"><i class="icon-arrow-left icon-white"></i>&nbsp;<?php echo lang('rooms_index_button_back');?></a>&nbsp;
+      <a href="<?php echo base_url();?>locations/<?php echo $location['id']; ?>/rooms/export" class="btn btn-primary"><i class="icon-file icon-white"></i>&nbsp;<?php echo lang('rooms_index_button_export');?></a>&nbsp;
+      <a href="<?php echo base_url();?>locations/<?php echo $location['id']; ?>/rooms/create" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i>&nbsp;<?php echo lang('rooms_index_button_create');?></a>
+    </div>
+</div>
+
+<link href="<?php echo base_url();?>assets/datatable/css/jquery.dataTables.css" rel="stylesheet">
+<script type="text/javascript" src="<?php echo base_url();?>assets/datatable/js/jquery.dataTables.min.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -154,20 +150,26 @@ $(document).ready(function() {
                 }
             });
     
-    $("#frmDeleteLocation").alert();
+    $("#frmDeleteRoom").alert();
     
-    //On showing the confirmation pop-up, add the contract id at the end of the delete url action
-    $('#frmDeleteLocation').on('show', function() {
-        var link = "<?php echo base_url();?>locations/delete/" + $(this).data('id');
-        $("#lnkDeleteLocation").attr('href', link);
+    //On showing the confirmation pop-up, add the room id at the end of the delete url action
+    $('#frmDeleteRoom').on('show', function() {
+        var link = "<?php echo base_url();?>locations/<?php echo $location['id'];?>/rooms/" + $(this).data('id') + "/delete";
+        $("#lnkDeleteRoom").attr('href', link);
     });
 
-    //Display a modal pop-up so as to confirm if a contract has to be deleted or not
+    //Display a modal pop-up so as to confirm if a room has to be deleted or not
     //We build a complex selector because datatable does horrible things on DOM...
     //a simplier selector doesn't work when the delete is on page >1 
     $("#locations tbody").on('click', '.confirm-delete',  function(){
             var id = $(this).data('id');
-            $('#frmDeleteLocation').data('id', id).modal('show');
+            $('#frmDeleteRoom').data('id', id).modal('show');
+    });
+    
+    //On showing the QR code pop-up, add the room id at the end of image link
+    $('#frmQRCode').on('show', function() {
+        var link = "<?php echo base_url();?>rooms/qrcode/" + $(this).data('id');
+        $("#imgQRCode").attr('src', link);
     });
 });
 </script>

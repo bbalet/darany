@@ -102,7 +102,7 @@ class Users extends CI_Controller {
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function employees() {
-        $this->auth->check_is_granted('employees_list');
+        $this->auth->check_is_granted('list_users');
         $this->expires_now();
         $data = $this->getUserContext();
         $data['employees'] = $this->users_model->get_all_employees();

@@ -101,19 +101,7 @@ class Auth {
 
             //Configuration of HR objects
             case 'list_employees' :
-            case 'employee_contract' :
-            case 'employee_manager' :
-            case 'list_contracts' :
-            case 'export_contracts' :
-            case 'view_contract' :
-            case 'create_contract' :
-            case 'delete_contract' :
-            case 'edit_contract' :
-            case 'delete_positions' :
-            case 'edit_positions' :
-            case 'create_positions' :
-            case 'export_positions' :
-            case 'list_positions' :
+
                 
             case 'calendar_contract' :
             case 'adddayoff_contract' :

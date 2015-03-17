@@ -83,34 +83,32 @@ class Rooms_model extends CI_Model {
     }
     
     /**
-     * Insert a new position
+     * Insert a new room (a meeting room is attached to a location)
      * Inserted data are coming from an HTML form
      * @return type
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
-    public function set_positions() {
+    public function set_rooms($location) {
         
         $data = array(
+            'location' => $location,
             'name' => $this->input->post('name'),
+            'manager' => $this->input->post('manager'),
+            'floor' => $this->input->post('floor'),
             'description' => $this->input->post('description')
         );
-        return $this->db->insert('positions', $data);
+        return $this->db->insert('rooms', $data);
     }
     
     /**
-     * Delete a position from the database
-     * Cascade update all users having this postion (filled with 0)
+     * Delete a rooms from the database
+     * TODO:Cascade delete timeslots
      * @param int $id identifier of the position record
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
-    public function delete_position($id) {
-        $delete = $this->db->delete('positions', array('id' => $id));
-        $data = array(
-            'position' => 0
-        );
-        $this->db->where('position', $id);
-        $update = $this->db->update('users', $data);
-        return $delete && $update;
+    public function delete_room($id) {
+        $this->db->delete('rooms', array('id' => $id));
+        $this->db->delete('timeslots', array('room' => $id));
     }
     
     /**
