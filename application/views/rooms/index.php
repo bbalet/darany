@@ -58,12 +58,17 @@ $(document).ready(function() {
                 <a href="<?php echo base_url();?>locations/edit/<?php echo $room['id']; ?>" title="<?php echo lang('rooms_index_thead_tip_edit');?>"><i class="icon-pencil"></i></a>
                 <a href="<?php echo base_url();?>locations/<?php echo $room['id']; ?>/rooms"><?php echo lang('rooms_index_thead_link_rooms');?></a>&nbsp;
                 
-                
-                
-                <i class="icon-calendar"></i>&nbsp;
-                
-                
+                 
+                <a href="<?php echo base_url();?>rooms/timeslots/<?php echo $room['id'];?>" title="View timeslot"><i class="icon-list-alt"></i></a>&nbsp;
+                <a href="<?php echo base_url();?>rooms/calendar/<?php echo $room['id'];?>" title="View calendar"><i class="icon-calendar"></i></a>&nbsp;
                 <a href="#myModal" role="button" data-toggle="modal"><i class="icon-qrcode"></i></a>
+                
+                <?php if ($room['free']) { ?>
+                <a href="<?php echo base_url();?>rooms/status/<?php echo $room['id'];?>" title="The room is available"><i class="icon-ok-circle"></i></a>&nbsp;
+                <?php } else { ?>
+                <a href="<?php echo base_url();?>rooms/status/<?php echo $room['id'];?>" title="The room is already booked"><i class="icon-ban-circle"></i></a>&nbsp;
+                 <?php } ?>
+                
             </div>
         </td>
         <td><?php echo $room['name']; ?></td>

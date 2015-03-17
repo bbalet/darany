@@ -68,7 +68,7 @@ class Api extends CI_Controller {
         if ($this->agent->is_browser() || $this->agent->is_mobile())
         {
             $agent = $this->agent->browser().' '.$this->agent->version();
-            redirect('locations');
+            redirect('rooms/status/' . $id);
         }
         else
         {        

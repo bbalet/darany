@@ -63,11 +63,10 @@ $route['locations'] = 'locations';
 $route['locations/(:num)/rooms'] = 'rooms/index/$1';
 $route['locations/(:num)/rooms/create'] = 'rooms/create/$1';
 $route['rooms/qrcode/(:num)'] = 'rooms/qrcode/$1';
-
-//Calendars
-$route['calendar/workmates'] = 'calendar/workmates';
-$route['leaves/workmates'] = 'leaves/workmates';
-
+$route['rooms/status/(:num)'] = 'rooms/status/$1';
+$route['rooms/timeslots/(:num)'] = 'rooms/timeslots/$1';
+$route['rooms/calendar/(:num)'] = 'rooms/calendar/$1';
+$route['rooms/calfeed/(:num)'] = 'rooms/calfeed/$1';
 
 
 //Session management

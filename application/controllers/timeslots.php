@@ -68,12 +68,7 @@ class Leaves extends CI_Controller {
         $this->expires_now();
         $data = $this->getUserContext();
         $data['leaves'] = $this->leaves_model->get_user_leaves($this->session->userdata('id'));
-        $this->load->model('status_model');
-        $this->load->model('types_model');
-        for ($i = 0; $i < count($data['leaves']); ++$i) {
-            $data['leaves'][$i]['status_label'] = $this->status_model->get_label($data['leaves'][$i]['status']);
-            $data['leaves'][$i]['type_label'] = $this->types_model->get_label($data['leaves'][$i]['type']);
-        }
+
         $data['title'] = lang('leaves_index_title');
         $this->load->view('templates/header', $data);
         $this->load->view('menu/index', $data);

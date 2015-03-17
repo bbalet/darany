@@ -70,7 +70,7 @@ class Rooms extends CI_Controller {
         $data = $this->getUserContext();
         $this->load->model('locations_model');
         $data['location'] = $this->locations_model->get_locations($location);
-        $data['rooms'] = $this->rooms_model->get_rooms($location);
+        $data['rooms'] = $this->rooms_model->get_rooms($location, TRUE);
         $data['title'] = lang('rooms_index_title');
         $this->load->view('templates/header', $data);
         $this->load->view('menu/index', $data);
@@ -88,6 +88,53 @@ class Rooms extends CI_Controller {
         include APPPATH . "/third_party/phpqrcode/qrlib.php";
         $this->expires_now();
         QRcode::png(base_url() . 'api/rooms/' . $room . '/status');
+    }
+    
+    /**
+     * Show the status of a room (free or not and next date of change)
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     */
+    public function status($room) {
+        $this->auth->check_is_granted('rooms_list');
+        $data = $this->getUserContext();
+        $data['room'] = $this->rooms_model->get_room($room);
+        //$this->load->model('locations_model');
+        //$data['location'] = $this->locations_model->get_locations($data['room']['location']);
+        $data['title'] = lang('rooms_index_title');
+        $this->load->view('templates/header', $data);
+        $this->load->view('menu/index', $data);
+        $this->load->view('rooms/status', $data);
+        $this->load->view('templates/footer');
+    }
+    
+    /**
+     * Show the status of a room (free or not and next date of change)
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     */
+    public function calendar($room) {
+        //$this->auth->check_is_granted('rooms_list');
+        $data = $this->getUserContext();
+        $data['room'] = $this->rooms_model->get_room($room);
+        $this->lang->load('calendar', $this->language);
+        $data['title'] = lang('calendar_room_title');
+        $this->load->view('templates/header', $data);
+        $this->load->view('menu/index', $data);
+        $this->load->view('rooms/calendar', $data);
+        $this->load->view('templates/footer');
+    }
+    
+    /**
+     * Ajax endpoint : Send a list of fullcalendar events
+     * @param int $room Identifier of the meeting room
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     */
+    public function calfeed($room) {
+        $this->expires_now();
+        header("Content-Type: application/json");
+        $start = $this->input->get('start', TRUE);
+        $end = $this->input->get('end', TRUE);
+        $this->load->model('timeslots_model');
+        echo $this->timeslots_model->events($room, $start, $end);
     }
     
     /**

@@ -21,9 +21,7 @@ $this->lang->load('calendar', $language);
 $this->lang->load('status', $language);
 $this->lang->load('global', $language);?>
 
-<h1><?php echo lang('calendar_workmates_title');?></h1>
-
-<p><?php echo lang('calendar_workmates_description');?></p>
+<h1><?php echo lang('calendar_room_title');?> <span class="muted">(<?php echo $room['name'];?>)</span></h1>
 
 <div class="row-fluid">
     <div class="span3"><span class="label"><?php echo lang('Planned');?></span></div>
@@ -43,6 +41,16 @@ $this->lang->load('global', $language);?>
         </div>
  </div>
 
+<div class="row-fluid"><div class="span12">&nbsp;</div></div>
+
+<div class="row-fluid">
+    <div class="span12">
+      <a href="<?php echo base_url();?>locations/<?php echo $room['location'];?>/rooms" class="btn btn-primary"><i class="icon-arrow-left icon-white"></i>&nbsp;<?php echo lang('calendar_room_button_back');?></a>
+    </div>
+</div>
+
+<div class="row-fluid"><div class="span12">&nbsp;</div></div>
+
 <link href="<?php echo base_url();?>assets/fullcalendar/fullcalendar.css" rel="stylesheet">
 <script type="text/javascript" src="<?php echo base_url();?>assets/fullcalendar/lib/moment.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>assets/fullcalendar/fullcalendar.min.js"></script>
@@ -51,12 +59,14 @@ $this->lang->load('global', $language);?>
 $(document).ready(function() {
     //Create a calendar and fill it with AJAX events
     $('#calendar').fullCalendar({
+        defaultView: 'agendaWeek',
+        height: 500,
         header: {
             left: "prev,next today",
             center: "title",
             right: ""
         },
-        events: '<?php echo base_url();?>leaves/workmates',
+        events: '<?php echo base_url();?>rooms/calfeed/<?php echo $room['id'];?>',
         loading: function(isLoading) {
             if (isLoading) { //Display/Hide a pop-up showing an animated icon during the Ajax query.
                 $('#frmModalAjaxWait').modal('show');

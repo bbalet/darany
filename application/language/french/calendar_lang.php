@@ -16,23 +16,8 @@
  * along with darany. If not, see <http://www.gnu.org/licenses/>.
  */
 
-$lang['calendar_individual_title'] = 'Mon calendrier';
-$lang['calendar_individual_description'] = 'Calendrier de mes absences.';
-$lang['calendar_individual_popup_event_link_ical'] = 'Télécharger le fichier iCal';
-$lang['calendar_individual_popup_event_link_ical_description'] = '(pour importer l\'absence dans Outlook, Thunderbird, etc.)';
-$lang['calendar_individual_popup_event_title'] = 'Détails de l\'événement';
-$lang['calendar_individual_popup_event_button_close'] = 'Fermer';
-$lang['calendar_individual_day_offs'] = 'Jours non travaillés';
-
-$lang['calendar_workmates_title'] = 'Calendrier de mes collègues';
-$lang['calendar_workmates_description'] = 'Demandes de congés des employés ayant le même supérieur hierarchique.';
-
-$lang['calendar_collaborators_title'] = 'Calendrier de mes collaborateurs';
-$lang['calendar_collaborators_description'] = 'Demandes de congés de mes collaborateurs. Cette page sera vide si je ne suis pas manager.';
-
-$lang['calendar_department_title'] = 'Calendrier de mon service';
-$lang['calendar_department_description'] = 'Calendrier des employés travaillant dans mon service';
-$lang['contract_department_msg_error'] = 'Vous n\'appartenez à aucun service. Veuillez contacter le service des ressources humaines.';
+$lang['calendar_room_title'] = 'Calendrier de la salle de réunion';
+$lang['calendar_room_button_back'] = 'Retour à la liste des salles de réunion';
 
 $lang['calendar_component_monthNames'] = '\'Janvier\',\'Février\',\'Mars\',\'Avril\',\'Mai\',\'Juin\',\'Juillet\',\'Août\',\'Septembre\',\'Octobre\',\'Novembre\',\'Décembre\'';
 $lang['calendar_component_monthNamesShort'] = '\'janv.\',\'févr.\',\'mars\',\'avr.\',\'mai\',\'juin\',\'juil.\',\'août\',\'sept.\',\'oct.\',\'nov.\',\'déc.\'';

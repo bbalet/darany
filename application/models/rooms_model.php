@@ -28,14 +28,43 @@ class Rooms_model extends CI_Model {
     /**
      * Get the list of rooms for a given location
      * @param int $location id of a location
+     * @param bool $checkStatus If true, check the availability of the rooms
      * @return array record of rooms
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
-    public function get_rooms($location = 0) {
+    public function get_rooms($location, $checkStatus = FALSE) {
         $this->db->select('rooms.*, CONCAT_WS(\' \', users.firstname, users.lastname) as manager_name', FALSE);
         $this->db->join('users', 'users.id = rooms.manager');
         $query = $this->db->get_where('rooms', array('location' => $location));
-        return $query->result_array();
+        $result =  $query->result_array();
+        if ($checkStatus) {
+            $this->load->model('timeslots_model');
+            for ($ii=0; $ii <count($result); $ii++) {
+                $enddate = $this->timeslots_model->end_timeslot($result[$ii]['id']);
+                if (is_null($enddate))
+                    $result[$ii]['free'] = TRUE;
+                else
+                    $result[$ii]['free'] = FALSE;
+            }
+        }
+        return $result;
+    }
+    
+    /**
+     * Get the details of a room
+     * @param int $room id of a room
+     * @return array record of room
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     */
+    public function get_room($room) {
+        $this->db->select('rooms.*, CONCAT_WS(\' \', users.firstname, users.lastname) as manager_name', FALSE);
+        $this->db->select('locations.name as location_name');
+        $this->db->select('users.email');
+        $this->db->join('users', 'users.id = rooms.manager');
+        $this->db->join('locations', 'locations.id = rooms.location');
+        $query = $this->db->get_where('rooms', array('rooms.id' => $room));
+        $result =  $query->result_array();
+        return $result[0];
     }
     
     /**
