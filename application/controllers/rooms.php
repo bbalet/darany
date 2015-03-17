@@ -79,6 +79,18 @@ class Rooms extends CI_Controller {
     }
     
     /**
+     * Display a qrcode containing the URL that allow to check the status of a room
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     */
+    public function qrcode($room) {
+        $this->auth->check_is_granted('rooms_list');
+        $data = $this->getUserContext();
+        include APPPATH . "/third_party/phpqrcode/qrlib.php";
+        $this->expires_now();
+        QRcode::png(base_url() . 'api/rooms/' . $room . '/status');
+    }
+    
+    /**
      * Display a form that allows adding a position
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
@@ -149,6 +161,7 @@ class Rooms extends CI_Controller {
      */
     public function export() {
         $this->auth->check_is_granted('export_positions');
+        $this->expires_now();
         $this->load->library('excel');
         $this->excel->setActiveSheetIndex(0);
         $this->excel->getActiveSheet()->setTitle(lang('positions_export_title'));
@@ -173,5 +186,21 @@ class Rooms extends CI_Controller {
         header('Cache-Control: max-age=0');
         $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
         $objWriter->save('php://output');
+    }
+    
+    /**
+     * Internal utility function
+     * make sure a resource is reloaded every time
+     */
+    private function expires_now() {
+        // Date in the past
+        header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+        // always modified
+        header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+        // HTTP/1.1
+        header("Cache-Control: no-store, no-cache, must-revalidate");
+        header("Cache-Control: post-check=0, pre-check=0", false);
+        // HTTP/1.0
+        header("Pragma: no-cache");
     }
 }

@@ -62,7 +62,7 @@ $route['locations'] = 'locations';
 //Rooms
 $route['locations/(:num)/rooms'] = 'rooms/index/$1';
 $route['locations/(:num)/rooms/create'] = 'rooms/create/$1';
-
+$route['rooms/qrcode/(:num)'] = 'rooms/qrcode/$1';
 
 //Calendars
 $route['calendar/workmates'] = 'calendar/workmates';

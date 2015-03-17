@@ -63,32 +63,42 @@ class Api extends CI_Controller {
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function getRoomStatus($id) {
-        //Check if input parameters are set
-        if ($this->input->get_post('login') && $this->input->get_post('password')) {
-            //Check user credentials
-            $login = $this->input->get_post('login');
-            $password = $this->input->get_post('password');
-            $this->load->model('users_model');
-            $user_id = $this->users_model->check_authentication($login, $password);
-            if ($user_id != -1) {
-                $this->load->model('timeslots_model');
-                $this->expires_now();
-                header("Content-Type: application/json");
-                $object = new StdClass;
-                $enddate = $this->timeslots_model->end_timeslot($id);
-                if (is_null($enddate)) {
-                    $object->IsFree = TRUE;   //No current timeslot
-                    $object->NextState = $this->timeslots_model->next_timeslot($id);
-                } else {
-                    $object->IsFree = FALSE;   //Return the end of current timeslot
-                    $object->NextState = $enddate;
+        //Test if we access this page from a REST client or from a browser
+        $this->load->library('user_agent');
+        if ($this->agent->is_browser() || $this->agent->is_mobile())
+        {
+            $agent = $this->agent->browser().' '.$this->agent->version();
+            redirect('locations');
+        }
+        else
+        {        
+            //Check if input parameters are set
+            if ($this->input->get_post('login') && $this->input->get_post('password')) {
+                //Check user credentials
+                $login = $this->input->get_post('login');
+                $password = $this->input->get_post('password');
+                $this->load->model('users_model');
+                $user_id = $this->users_model->check_authentication($login, $password);
+                if ($user_id != -1) {
+                    $this->load->model('timeslots_model');
+                    $this->expires_now();
+                    header("Content-Type: application/json");
+                    $object = new StdClass;
+                    $enddate = $this->timeslots_model->end_timeslot($id);
+                    if (is_null($enddate)) {
+                        $object->IsFree = TRUE;   //No current timeslot
+                        $object->NextState = $this->timeslots_model->next_timeslot($id);
+                    } else {
+                        $object->IsFree = FALSE;   //Return the end of current timeslot
+                        $object->NextState = $enddate;
+                    }
+                    echo json_encode($object);
+                } else {    //Wrong inputs
+                    $this->output->set_header("HTTP/1.1 422 Unprocessable entity");
                 }
-                echo json_encode($object);
-            } else {    //Wrong inputs
-                $this->output->set_header("HTTP/1.1 422 Unprocessable entity");
+            } else {    //Unauthorized
+                $this->output->set_header("HTTP/1.1 403 Forbidden");
             }
-        } else {    //Unauthorized
-            $this->output->set_header("HTTP/1.1 403 Forbidden");
         }
     }
     

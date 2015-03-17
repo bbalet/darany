@@ -57,11 +57,17 @@ $(document).ready(function() {
                 <a href="#" class="confirm-delete" data-id="<?php echo $room['id'];?>" title="<?php echo lang('rooms_index_thead_tip_delete');?>"><i class="icon-trash"></i></a>&nbsp; 
                 <a href="<?php echo base_url();?>locations/edit/<?php echo $room['id']; ?>" title="<?php echo lang('rooms_index_thead_tip_edit');?>"><i class="icon-pencil"></i></a>
                 <a href="<?php echo base_url();?>locations/<?php echo $room['id']; ?>/rooms"><?php echo lang('rooms_index_thead_link_rooms');?></a>&nbsp;
-                <i class="icon-calendar"></i>
+                
+                
+                
+                <i class="icon-calendar"></i>&nbsp;
+                
+                
+                <a href="#myModal" role="button" data-toggle="modal"><i class="icon-qrcode"></i></a>
             </div>
         </td>
         <td><?php echo $room['name']; ?></td>
-        <td><?php echo $manager_name; ?></td>
+        <td><?php echo $room['manager_name']; ?></td>
         <td><?php echo $room['floor']; ?></td>
         <td><?php echo $room['description']; ?></td>
     </tr>
@@ -71,9 +77,20 @@ $(document).ready(function() {
 	</div>
 </div>
 
-<div class="row-fluid">
-	<div class="span12">&nbsp;</div>
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Modal header</h3>
+  </div>
+  <div class="modal-body">
+      <p><img src="<?php echo base_url();?>rooms/qrcode/1" /></p>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" onclick="$('#myModal').modal('hide');">Close</a>
+  </div>
 </div>
+
+<div class="row-fluid"><div class="span12">&nbsp;</div></div>
 
 <div class="row-fluid">
     <div class="span2">
