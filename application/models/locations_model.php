@@ -57,6 +57,7 @@ class Locations_model extends CI_Model {
     
     /**
      * Delete a location from the database
+     * TODO:Cascade delete timeslots
      * @param int $id identifier of the location
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */

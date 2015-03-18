@@ -38,7 +38,7 @@ $(document).ready(function() {
         
 <h1><?php echo lang('rooms_index_title');?> <span class="muted">(<?php echo $location['name']; ?>)</span></h1>
 
-<table cellpadding="0" cellspacing="0" border="0" class="display" id="locations" width="100%">
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="rooms" width="100%">
     <thead>
         <tr>
             <th><?php echo lang('rooms_index_thead_id');?></th>
@@ -54,16 +54,12 @@ $(document).ready(function() {
         <td data-order="<?php echo $room['id']; ?>">
             <?php echo $room['id'];?>
             <div class="pull-right">
-                <a href="#" class="confirm-delete" data-id="<?php echo $room['id'];?>" title="<?php echo lang('rooms_index_thead_tip_delete');?>"><i class="icon-trash"></i></a>&nbsp; 
-                <a href="<?php echo base_url();?>locations/edit/<?php echo $room['id']; ?>" title="<?php echo lang('rooms_index_thead_tip_edit');?>"><i class="icon-pencil"></i></a>
-                <a href="<?php echo base_url();?>locations/<?php echo $room['id']; ?>/rooms"><?php echo lang('rooms_index_thead_link_rooms');?></a>&nbsp;
+                <a href="#" class="confirm-delete" data-id="<?php echo $room['id'];?>" title="<?php echo lang('rooms_index_tooltip_delete');?>"><i class="icon-trash"></i></a>&nbsp; 
+                <a href="<?php echo base_url();?>locations/edit/<?php echo $room['id']; ?>" title="<?php echo lang('rooms_index_tooltip_edit');?>"><i class="icon-pencil"></i></a>
                 <a href="<?php echo base_url();?>rooms/timeslots/<?php echo $room['id'];?>" title="<?php echo lang('rooms_index_tooltip_timeslot');?>"><i class="icon-list-alt"></i></a>&nbsp;
                 <a href="<?php echo base_url();?>rooms/calendar/<?php echo $room['id'];?>" title="<?php echo lang('rooms_index_tooltip_calendar');?>"><i class="icon-calendar"></i></a>&nbsp;
-                <a href="#frmQRCode" data-id="<?php echo $room['id'];?>" role="button" data-toggle="modal" title="<?php echo lang('rooms_index_thead_tip_qrcode');?>"><i class="icon-qrcode"></i></a>&nbsp;
-                
-                
+                <a href="#" class="qrcode-modal" data-id="<?php echo $room['id'];?>" role="button" data-toggle="modal" title="<?php echo lang('rooms_index_tooltip_qrcode');?>"><i class="icon-qrcode"></i></a>&nbsp;
                 <a href="<?php echo base_url();?>rooms/book/<?php echo $room['id'];?>" title="<?php echo lang('rooms_index_tooltip_book');?>"><i class="icon-book"></i></a>&nbsp;
-                
                 <?php if ($room['free']) { ?>
                 <a href="<?php echo base_url();?>rooms/status/<?php echo $room['id'];?>" title="<?php echo lang('rooms_index_tooltip_available');?>"><i class="icon-ok-circle"></i></a>&nbsp;
                 <?php } else { ?>
@@ -83,7 +79,7 @@ $(document).ready(function() {
 	</div>
 </div>
 
-<div id="frmQRCode" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="frmQRCodeLabel" aria-hidden="true">
+<div id="frmQRCode" class="modal hide fade">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     <h3><?php echo lang('rooms_index_popup_qrcode_title');?></h3>
@@ -127,7 +123,7 @@ $(document).ready(function() {
 <script type="text/javascript">
 $(document).ready(function() {
     //Transform the HTML table in a fancy datatable
-    $('#locations').dataTable({
+    $('#rooms').dataTable({
 		"oLanguage": {
                     "sEmptyTable":     "<?php echo lang('datatable_sEmptyTable');?>",
                     "sInfo":           "<?php echo lang('datatable_sInfo');?>",
@@ -154,6 +150,7 @@ $(document).ready(function() {
             });
     
     $("#frmDeleteRoom").alert();
+    $("#frmQRCode").alert();
     
     //On showing the confirmation pop-up, add the room id at the end of the delete url action
     $('#frmDeleteRoom').on('show', function() {
@@ -164,9 +161,14 @@ $(document).ready(function() {
     //Display a modal pop-up so as to confirm if a room has to be deleted or not
     //We build a complex selector because datatable does horrible things on DOM...
     //a simplier selector doesn't work when the delete is on page >1 
-    $("#locations tbody").on('click', '.confirm-delete',  function(){
+    $("#rooms tbody").on('click', '.confirm-delete',  function(){
             var id = $(this).data('id');
             $('#frmDeleteRoom').data('id', id).modal('show');
+    });
+    
+    $("#rooms tbody").on('click', '.qrcode-modal',  function(){
+            var id = $(this).data('id');
+            $('#frmQRCode').data('id', id).modal('show');
     });
     
     //On showing the QR code pop-up, add the room id at the end of image link

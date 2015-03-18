@@ -21,7 +21,7 @@
 <html>
     <body>
         <h3>{Title}</h3>
-        {Firstname} {Lastname} requests a leave. Below, the <a href="{UrlDetails}">details</a> :
+        {Creator} wants to book a meeting room. Below, the <a href="{UrlDetails}">details</a> :
         <table border="0">
             <tr>
                 <td>From &nbsp;</td><td>{StartDate}</td>
@@ -30,10 +30,13 @@
                 <td>To &nbsp;</td><td>{EndDate}</td>
             </tr>
             <tr>
-                <td>Type &nbsp;</td><td>{Type}</td>
+                <td>Note &nbsp;</td><td>{Note}</td>
             </tr>
             <tr>
-                <td>Reason &nbsp;</td><td>{Reason}</td>
+                <td>Room &nbsp;</td><td>{RoomName}</td>
+            </tr>
+            <tr>
+                <td>Location &nbsp;</td><td>{LocationName}</td>
             </tr>
         </table>
         <a href="{UrlAccept}">Accept</a>

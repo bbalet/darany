@@ -72,7 +72,10 @@ $route['rooms/timeslots/(:num)'] = 'rooms/timeslots/$1';
 $route['rooms/calendar/(:num)'] = 'rooms/calendar/$1';
 $route['rooms/calfeed/(:num)'] = 'rooms/calfeed/$1';
 
-
+//Timeslots
+$route['timeslots/accept/(:num)'] = 'timeslots/accept/$1';
+$route['timeslots/reject/(:num)'] = 'timeslots/reject/$1';
+$route['timeslots'] = 'timeslots';
 
 //Session management
 $route['session/login'] = 'session/login';

@@ -25,7 +25,7 @@
     </head>
     <body>
         <h3>{Title}</h3>
-        {Firstname} {Lastname} vous soumet une demande d'absence. Voici les <a href="{UrlDetails}">détails</a> :
+        {Creator} souhaite réserver une salle de réunion. Voici les <a href="{UrlDetails}">détails</a> :
         <table border="0">
             <tr>
                 <td>Du &nbsp;</td><td>{StartDate}</td>
@@ -34,10 +34,13 @@
                 <td>Au &nbsp;</td><td>{EndDate}</td>
             </tr>
             <tr>
-                <td>Type &nbsp;</td><td>{Type}</td>
+                <td>Note &nbsp;</td><td>{Note}</td>
             </tr>
             <tr>
-                <td>Cause &nbsp;</td><td>{Reason}</td>
+                <td>Salle &nbsp;</td><td>{RoomName}</td>
+            </tr>
+            <tr>
+                <td>Emplacement &nbsp;</td><td>{LocationName}</td>
             </tr>
         </table>
         <a href="{UrlAccept}">Accepter</a>

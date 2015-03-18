@@ -26,6 +26,39 @@ class Timeslots_model extends CI_Model {
     }
     
     /**
+     * Book a room (create a timeslot). Inserted data are coming from an HTML form.
+     * @return int number of affected rows
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     */
+    public function book_room() {
+        $room = $this->input->post('room');
+        $startdate = $this->input->post('startdate');
+        $enddate = $this->input->post('enddate');
+        $status = $this->input->post('status');
+        $creator = $this->input->post('creator');
+        $note = $this->input->post('note');
+        $this->set_timeslots($room, $startdate, $enddate, $status, $creator, $note);
+        return $this->db->insert_id();
+    }
+    
+    /**
+     * Insert a new timeslot
+     * @return int number of affected rows
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     */
+    public function set_timeslots($room, $startdate, $enddate, $status, $creator, $note) {
+        $data = array(
+            'room' => $room,
+            'startdate' => $startdate,
+            'enddate' => $enddate,
+            'status' => $status,
+            'creator' => $creator,
+            'note' => $note
+        );
+        return $this->db->insert('timeslots', $data);
+    }
+    
+    /**
      * Return the list of timeslots for a given room
      * @param int $room id of a room
      * @return array record of timeslots

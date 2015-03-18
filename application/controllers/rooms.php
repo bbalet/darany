@@ -43,6 +43,7 @@ class Rooms extends CI_Controller {
         $this->language_code = $this->session->userdata('language_code');
         $this->load->helper('language');
         $this->lang->load('rooms', $this->language);
+        $this->lang->load('global', $this->language);
     }
     
     /**
@@ -103,6 +104,42 @@ class Rooms extends CI_Controller {
         $this->load->view('menu/index', $data);
         $this->load->view('rooms/status', $data);
         $this->load->view('templates/footer');
+    }
+    
+    /**
+     * Display the form that allows to book a room (create a timeslot)
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     */
+    public function book($room) {
+        //$this->auth->check_is_granted('rooms_list');
+        $data = $this->getUserContext();
+        $data['room'] = $this->rooms_model->get_room($room);
+        $data['title'] = lang('rooms_book_title');
+        
+        $this->load->helper('form');
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('room', '', 'required|xss_clean');
+        $this->form_validation->set_rules('creator', '', 'required|xss_clean');
+        $this->form_validation->set_rules('startdate', lang('rooms_book_field_startdate'), 'required|xss_clean');
+        $this->form_validation->set_rules('enddate', lang('rooms_book_field_enddate'), 'required|xss_clean');
+        $this->form_validation->set_rules('status', lang('rooms_book_field_status'), 'required|xss_clean');
+        $this->form_validation->set_rules('note', lang('rooms_book_field_note'), 'xss_clean');
+
+        if ($this->form_validation->run() === FALSE) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('menu/index', $data);
+            $this->load->view('rooms/book', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $this->load->model('timeslots_model');
+            $timeslot = $this->timeslots_model->book_room();
+            //If the status is requested, send an email to the manager
+            if ($this->input->post('status') == 2) {
+                $this->sendMail($timeslot);
+            }
+            $this->session->set_flashdata('msg', lang('rooms_book_flash_msg'));
+            redirect('locations/' .  $data['room']['location_id'] . '/rooms');
+        }
     }
     
     /**
@@ -204,6 +241,65 @@ class Rooms extends CI_Controller {
         redirect('locations/' . $location . '/rooms');
     }
 
+    /**
+     * Send a booking request email to the manager of the meeting room
+     * @param int $timeslot timeslot identifier
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     */
+    private function sendMail($timeslot) {
+        $this->load->model('rooms_model');
+        $room = $this->rooms_model->get_room_from_timeslot($timeslot);
+
+        //Test if the manager hasn't been deleted meanwhile
+        if (empty($room['manager_email'])) {
+            $this->session->set_flashdata('msg', lang('rooms_book_flash_msg_error'));
+        } else {
+            $acceptUrl = base_url() . 'timeslots/accept/' . $timeslot;
+            $rejectUrl = base_url() . 'timeslots/reject/' . $timeslot;
+            $detailUrl = base_url() . 'timeslots';
+
+            //Send an e-mail to the manager
+            $this->load->library('email');
+            $this->load->library('polyglot');
+            $usr_lang = $this->polyglot->code2language($room['manager_language']);
+            $this->lang->load('email', $usr_lang);
+
+            $this->lang->load('global', $usr_lang);
+            $date = new DateTime($this->input->post('startdate'));
+            $startdate = $date->format(lang('global_datetime_format'));
+            $date = new DateTime($this->input->post('enddate'));
+            $enddate = $date->format(lang('global_datetime_format'));
+
+            $this->load->library('parser');
+            $data = array(
+                'Title' => lang('email_booking_request_title'),
+                'Creator' => $room['creator_name'],
+                'RoomName' => $room['room_name'],
+                'LocationName' => $room['location_name'],
+                'StartDate' => $startdate,
+                'EndDate' => $enddate,
+                'Note' => $this->input->post('note'),
+                'UrlAccept' => $acceptUrl,
+                'UrlReject' => $rejectUrl,
+                'UrlDetails' => $detailUrl
+            );
+            $message = $this->parser->parse('emails/' . $room['manager_language'] . '/request', $data, TRUE);
+            if ($this->email->mailer_engine == 'phpmailer') {
+                $this->email->phpmailer->Encoding = 'quoted-printable';
+            }
+
+            if ($this->config->item('from_mail') != FALSE && $this->config->item('from_name') != FALSE ) {
+                $this->email->from($this->config->item('from_mail'), $this->config->item('from_name'));
+            } else {
+               $this->email->from('do.not@reply.me', 'Darany');
+            }
+            $this->email->to($room['manager_email']);
+            $this->email->subject(lang('email_booking_request_subject'));
+            $this->email->message($message);
+            $this->email->send();
+        }
+    }
+    
     /**
      * Action: export the list of rooms attached to a given location into an Excel file
      * @author Benjamin BALET <benjamin.balet@gmail.com>

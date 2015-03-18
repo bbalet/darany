@@ -58,11 +58,36 @@ class Rooms_model extends CI_Model {
      */
     public function get_room($room) {
         $this->db->select('rooms.*, CONCAT_WS(\' \', users.firstname, users.lastname) as manager_name', FALSE);
+        $this->db->select('locations.id as location_id');
         $this->db->select('locations.name as location_name');
         $this->db->select('users.email');
         $this->db->join('users', 'users.id = rooms.manager');
         $this->db->join('locations', 'locations.id = rooms.location');
         $query = $this->db->get_where('rooms', array('rooms.id' => $room));
+        $result =  $query->result_array();
+        return $result[0];
+    }
+    
+    /**
+     * Get the details of a room form the timeslot ID
+     * @param int $timeslot id of a timeslot
+     * @return array record of room
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     */
+    public function get_room_from_timeslot($timeslot) {
+        $this->db->select('mgr.email as manager_email');
+        $this->db->select('mgr.language as manager_language');
+        $this->db->select('usr.email as creator_email');
+        $this->db->select('CONCAT_WS(\' \', usr.firstname, usr.lastname) as creator_name', FALSE);
+        $this->db->select('rooms.name as room_name');
+        $this->db->select('locations.name as location_name');
+        $this->db->select('timeslots.startdate');
+        $this->db->select('timeslots.enddate');
+        $this->db->join('users usr', 'timeslots.creator = usr.id');
+        $this->db->join('rooms', 'timeslots.room = rooms.id');
+        $this->db->join('locations', 'rooms.location = locations.id');
+        $this->db->join('users mgr', 'rooms.manager = mgr.id');
+        $query = $this->db->get_where('timeslots', array('timeslots.id' => $timeslot));
         $result =  $query->result_array();
         return $result[0];
     }
@@ -102,7 +127,6 @@ class Rooms_model extends CI_Model {
     
     /**
      * Delete a rooms from the database
-     * TODO:Cascade delete timeslots
      * @param int $id identifier of the position record
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */

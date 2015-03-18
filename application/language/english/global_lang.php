@@ -20,6 +20,12 @@ $lang['global_link_tooltip_documentation'] = 'Link to documentation';
 $lang['global_msg_error_forbidden'] = 'Operation (%s) is not granted';
 $lang['global_msg_wait'] = 'Please wait';
 $lang['global_date_format'] = 'm/d/Y';
+$lang['global_datetime_format'] = 'm/d/Y H:i';
+
+$lang['Requested'] = 'Requested';
+$lang['Planned'] = 'Planned';
+$lang['Accepted'] = 'Accepted';
+$lang['Rejected'] = 'Rejected';
 
 $lang['footer_link_go_top'] = 'Go top';
 $lang['footer_copyright_notice'] = '&copy; 2014 Darany Authors &middot; Meeting Rooms Booking System';
