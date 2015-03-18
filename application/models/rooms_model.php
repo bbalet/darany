@@ -126,8 +126,8 @@ class Rooms_model extends CI_Model {
     }
     
     /**
-     * Delete a rooms from the database
-     * @param int $id identifier of the position record
+     * Delete a room from the database
+     * @param int $id identifier of the room
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function delete_room($id) {

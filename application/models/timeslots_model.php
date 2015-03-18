@@ -77,6 +77,15 @@ class Timeslots_model extends CI_Model {
     }
 
     /**
+     * Delete a timeslot from the database
+     * @param int $id identifier of the timeslot
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     */
+    public function delete_timeslot($id) {
+        $this->db->delete('timeslots', array('id' => $id));
+    }
+    
+    /**
      * Return a timeslot by using its ID
      * @param int $room id of the timeslot
      * @return array record of timeslots

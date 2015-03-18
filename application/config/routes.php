@@ -68,13 +68,15 @@ $route['locations/(:num)/rooms/export'] = 'rooms/export/$1';
 $route['rooms/book/(:num)'] = 'rooms/book/$1';
 $route['rooms/qrcode/(:num)'] = 'rooms/qrcode/$1';
 $route['rooms/status/(:num)'] = 'rooms/status/$1';
-$route['rooms/timeslots/(:num)'] = 'rooms/timeslots/$1';
+//$route['rooms/timeslots/(:num)'] = 'rooms/timeslots/$1';
 $route['rooms/calendar/(:num)'] = 'rooms/calendar/$1';
 $route['rooms/calfeed/(:num)'] = 'rooms/calfeed/$1';
 
 //Timeslots
 $route['timeslots/accept/(:num)'] = 'timeslots/accept/$1';
 $route['timeslots/reject/(:num)'] = 'timeslots/reject/$1';
+$route['rooms/(:num)/timeslots'] = 'timeslots/room/$1';
+$route['rooms/(:num)/timeslots/(:num)/delete'] = 'timeslots/delete/$1/$2';
 $route['timeslots'] = 'timeslots';
 
 //Session management

@@ -53,17 +53,6 @@ class Auth {
         //log_message('debug', '{librairies/auth/is_granted} Entering method with Operation=' . $operation . ' / object_id=' . $object_id);
         switch ($operation) {
             
-            //Admin functions
-            case 'purge_database' :
-                if ($this->CI->session->userdata('is_admin') == true)
-                    if ($this->CI->config->item('enable_purge') == true)
-                        return true;
-                    else
-                        return false;
-                else
-                    return false;
-                break;
-            
             //User management
             case 'list_users' :
             case 'create_user' :
@@ -90,29 +79,6 @@ class Auth {
                         return false;
                 }
                 break;
-                
-            //Configuration
-            case 'edit_settings' :
-                if ($this->CI->session->userdata('is_admin') == true)
-                    return true;
-                else
-                    return false;
-                break;
-
-            //Configuration of HR objects
-            case 'list_employees' :
-
-                
-            case 'calendar_contract' :
-            case 'adddayoff_contract' :
-            case 'deletedayoff_contract' :
-                if ($this->CI->session->userdata('is_admin') == true)
-                    return true;
-                else
-                    return false;
-                break;
-            
-
             
             //locations
             case 'locations_delete' :
@@ -127,20 +93,14 @@ class Auth {
             case 'rooms_export' :
             case 'rooms_create' :
             case 'rooms_edit' :
-                
-                
-                
-            //Leaves
-            case 'list_leaves' :
-            case 'create_leaves' :
-            case 'export_leaves' :
-            case 'view_leaves' :
-            case 'edit_leaves' :
-            case 'counters_leaves' :
-                return true;
-                break;
-            
 
+            //rooms
+            case 'timeslots_delete' :
+            case 'timeslots_list' :
+            case 'timeslots_export' :
+            case 'timeslots_create' :
+            case 'timeslots_edit' :            
+return true;
 
             default:
                 return false;

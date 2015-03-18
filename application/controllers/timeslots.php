@@ -22,7 +22,7 @@ if (!defined('BASEPATH')) {
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Requests extends CI_Controller {
+class Timeslots extends CI_Controller {
     
     /**
      * Default constructor
@@ -35,15 +35,16 @@ class Requests extends CI_Controller {
             $this->session->set_userdata('last_page', current_url());
             redirect('session/login');
         }
-        $this->load->model('leaves_model');
+        $this->load->model('timeslots_model');
         $this->fullname = $this->session->userdata('firstname') . ' ' .
                 $this->session->userdata('lastname');
-        $this->is_hr = $this->session->userdata('is_hr');
+        $this->is_admin = $this->session->userdata('is_admins');
         $this->user_id = $this->session->userdata('id');
         $this->language = $this->session->userdata('language');
         $this->language_code = $this->session->userdata('language_code');
         $this->load->helper('language');
-        $this->lang->load('requests', $this->language);
+        $this->lang->load('global', $this->language);
+        $this->lang->load('timeslots', $this->language);
     }
     
     /**
@@ -54,7 +55,7 @@ class Requests extends CI_Controller {
     private function getUserContext()
     {
         $data['fullname'] = $this->fullname;
-        $data['is_hr'] = $this->is_hr;
+        $data['is_admin'] = $this->is_admin;
         $data['user_id'] =  $this->user_id;
         $data['language'] = $this->language;
         $data['language_code'] =  $this->language_code;
@@ -62,12 +63,12 @@ class Requests extends CI_Controller {
     }
 
     /**
-     * Display the list of all requests submitted to you
+     * Display the list of timeslots for a room
      * Status is submitted
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
-    public function index($filter = 'requested') {
-        $this->auth->check_is_granted('list_requests');
+    public function requested($filter = 'requested') {
+        $this->auth->check_is_granted('timeslots_list');
         $this->expires_now();
         if ($filter == 'all') {
             $showAll = true;
@@ -90,6 +91,37 @@ class Requests extends CI_Controller {
         $this->load->view('templates/footer');
     }
 
+    /**
+     * Display the list of timeslots for a room
+     * Status is submitted
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     */
+    public function room($room) {
+        $this->auth->check_is_granted('timeslots_list');
+        $this->expires_now();
+        $data = $this->getUserContext();
+        $data['title'] = lang('timeslots_room_title');
+        $this->load->model('rooms_model');
+        $data['room'] = $this->rooms_model->get_room($room);
+        $data['timeslots'] = $this->timeslots_model->get_timeslots($room);
+        $this->load->view('templates/header', $data);
+        $this->load->view('menu/index', $data);
+        $this->load->view('timeslots/room', $data);
+        $this->load->view('templates/footer');
+    }
+    
+    /**
+     * Action : delete a timeslot
+     * @param int $id room identifier
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     */
+    public function delete($room, $timeslot) {
+        $this->auth->check_is_granted('timeslots_delete');
+        $this->timeslots_model->delete_timeslot($timeslot);
+        $this->session->set_flashdata('msg', lang('timeslots_delete_flash_msg'));
+        redirect('rooms/' . $room . '/timeslots');
+    }
+    
     /**
      * Accept a leave request
      * @param int $id leave request identifier
