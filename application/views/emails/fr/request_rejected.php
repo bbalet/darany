@@ -25,9 +25,9 @@
     </head>
     <body>
         <h3>{Title}</h3>
-        Cher {Firstname} {Lastname}, <br />
+        Cher {CreatorName}, <br />
         <br />
-        La demande d'absence que vous avez soumise a été refusée. Voici les détails :
+        La demande de réservation que vous avez soumise a été refusée. Voici les détails :
         <table border="0">
             <tr>
                 <td>Du &nbsp;</td><td>{StartDate}</td>

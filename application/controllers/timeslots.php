@@ -38,7 +38,7 @@ class Timeslots extends CI_Controller {
         $this->load->model('timeslots_model');
         $this->fullname = $this->session->userdata('firstname') . ' ' .
                 $this->session->userdata('lastname');
-        $this->is_admin = $this->session->userdata('is_admins');
+        $this->is_admin = $this->session->userdata('is_admin');
         $this->user_id = $this->session->userdata('id');
         $this->language = $this->session->userdata('language');
         $this->language_code = $this->session->userdata('language_code');
@@ -111,6 +111,98 @@ class Timeslots extends CI_Controller {
     }
     
     /**
+     * Display the list of timeslots booked by the connected user
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     */
+    public function user() {
+        $this->auth->check_is_granted('timeslots_list');
+        $this->expires_now();
+        $data = $this->getUserContext();
+        $data['title'] = lang('timeslots_user_title');
+        $data['timeslots'] = $this->timeslots_model->get_timeslots_user($this->user_id);
+        $this->load->view('templates/header', $data);
+        $this->load->view('menu/index', $data);
+        $this->load->view('timeslots/user', $data);
+        $this->load->view('templates/footer');
+    }
+    
+    /**
+     * Action : delete a timeslot (from my booking page)
+     * @param int $id room identifier
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     */
+    public function delete_booking($timeslot) {
+        $this->auth->check_is_granted('timeslots_delete');
+        $this->timeslots_model->delete_timeslot($timeslot);
+        $this->session->set_flashdata('msg', lang('timeslots_delete_flash_msg'));
+        redirect('timeslots/me');
+    }
+    
+    /**
+     * Action : delete a timeslot (from the validation page)
+     * @param int $id room identifier
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     */
+    public function delete_validation($timeslot) {
+        $this->auth->check_is_granted('timeslots_delete');
+        $this->timeslots_model->delete_timeslot($timeslot);
+        $this->session->set_flashdata('msg', lang('timeslots_delete_flash_msg'));
+        redirect('timeslots/validation');
+    }
+    
+    /**
+     * Display the list of timeslots booked by the connected user
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     */
+    public function validation() {
+        $this->auth->check_is_granted('timeslots_list');
+        $this->expires_now();
+        $data = $this->getUserContext();
+        $data['title'] = lang('timeslots_user_title');
+        $data['timeslots'] = $this->timeslots_model->get_timeslots_validation($this->user_id);
+        $this->load->view('templates/header', $data);
+        $this->load->view('menu/index', $data);
+        $this->load->view('timeslots/validation', $data);
+        $this->load->view('templates/footer');
+    }
+    
+    /**
+     * Display the form that allows to edit a timeslot
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     */
+    public function edit($timeslot) {
+        //$this->auth->check_is_granted('rooms_list');
+        $data = $this->getUserContext();
+        $data['room'] = $this->rooms_model->get_room($room);
+        $data['title'] = lang('timeslots_edit_title');
+        
+        $this->load->helper('form');
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('room', '', 'required|xss_clean');
+        $this->form_validation->set_rules('creator', '', 'required|xss_clean');
+        $this->form_validation->set_rules('startdate', lang('timeslots_edit_field_startdate'), 'required|xss_clean');
+        $this->form_validation->set_rules('enddate', lang('timeslots_edit_field_enddate'), 'required|xss_clean');
+        $this->form_validation->set_rules('status', lang('timeslots_edit_field_status'), 'required|xss_clean');
+        $this->form_validation->set_rules('note', lang('timeslots_edit_field_note'), 'xss_clean');
+
+        if ($this->form_validation->run() === FALSE) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('menu/index', $data);
+            $this->load->view('timeslots/edit', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $this->load->model('timeslots_model');
+            $timeslot = $this->timeslots_model->book_room();
+            //If the status is requested, send an email to the manager
+            if ($this->input->post('status') == 2) {
+                $this->sendMail($timeslot);
+            }
+            $this->session->set_flashdata('msg', lang('timeslots_edit_flash_msg'));
+            redirect('timeslots/me');
+        }
+    }
+    
+    /**
      * Action : delete a timeslot
      * @param int $id room identifier
      * @author Benjamin BALET <benjamin.balet@gmail.com>
@@ -123,105 +215,90 @@ class Timeslots extends CI_Controller {
     }
     
     /**
-     * Accept a leave request
+     * Accept a booking request
      * @param int $id leave request identifier
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function accept($id) {
-        $this->auth->check_is_granted('accept_requests');
-        $this->load->model('users_model');
-        $leave = $this->leaves_model->get_leaves($id);
-        if (empty($leave)) {
+        $this->auth->check_is_granted('timeslots_accept');
+        $timeslot = $this->timeslots_model->get_timeslot($id);
+        if (empty($timeslot)) {
             show_404();
         }
-        $employee = $this->users_model->get_users($leave['employee']);
-        if (($this->user_id != $employee['manager']) && ($this->is_hr == false)) {
-            log_message('error', 'User #' . $this->user_id . ' illegally tried to accept leave #' . $id);
+        if (($this->user_id != $timeslot['manager_id']) && ($this->is_admin == FALSE)) {
+            log_message('error', 'User #' . $this->user_id . ' illegally tried to accept booking #' . $id);
             $this->session->set_flashdata('msg', lang('requests_accept_flash_msg_error'));
-            redirect('home');
+            redirect('locations');
         } else {
-            $this->leaves_model->accept_leave($id);
+            $this->timeslots_model->accept($id);
             $this->sendMail($id);
-            $this->session->set_flashdata('msg', lang('requests_accept_flash_msg_success'));
-            if (isset($_GET['source'])) {
-                redirect($_GET['source']);
-            } else {
-                redirect('requests');
-            }
+            $this->session->set_flashdata('msg', lang('timeslots_accept_flash_msg'));
+            redirect('timeslots/validation');
         }
     }
 
     /**
-     * Reject a leave request
+     * Reject a booking request
      * @param int $id leave request identifier
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function reject($id) {
-        $this->auth->check_is_granted('reject_requests');
-        $this->load->model('users_model');
-        $leave = $this->leaves_model->get_leaves($id);
-        if (empty($leave)) {
+        $this->auth->check_is_granted('timeslots_reject');
+        $timeslot = $this->timeslots_model->get_timeslot($id);
+        if (empty($timeslot)) {
             show_404();
         }
-        $employee = $this->users_model->get_users($leave['employee']);
-        if (($this->user_id != $employee['manager']) && ($this->is_hr == false)) {
-            log_message('error', 'User #' . $this->user_id . ' illegally tried to reject leave #' . $id);
-            $this->session->set_flashdata('msg', lang('requests_reject_flash_msg_error'));
-            redirect('home');
+        if (($this->user_id != $timeslot['manager_id']) && ($this->is_admin == FALSE)) {
+            log_message('error', 'User #' . $this->user_id . ' illegally tried to reject booking #' . $id);
+            $this->session->set_flashdata('msg', lang('timeslots_reject_flash_msg'));
+            redirect('locations');
         } else {
-            $this->leaves_model->reject_leave($id);
+            $this->timeslots_model->reject($id);
             $this->sendMail($id);
             $this->session->set_flashdata('msg',  lang('requests_reject_flash_msg_success'));
-            if (isset($_GET['source'])) {
-                redirect($_GET['source']);
-            } else {
-                redirect('requests');
-            }
+            redirect('timeslots/validation');
         }
     }
     
 
     /**
-     * Send a leave request email to the employee that requested the leave
-     * The method will check if the leave request wes accepted or rejected 
+     * Send a confirmation email to the employee that requested the room
+     * The method will check if the booking request wes accepted or rejected 
      * before sending the e-mail
      * @param int $id Leave request identifier
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     private function sendMail($id)
     {
-        $this->load->model('users_model');
-        $leave = $this->leaves_model->get_leaves($id);
-        $employee = $this->users_model->get_users($leave['employee']);
+        $timeslot = $this->timeslots_model->get_timeslot($id);
 
         //Send an e-mail to the employee
         $this->load->library('email');
         $this->load->library('polyglot');
-        $usr_lang = $this->polyglot->code2language($employee['language']);
+        $usr_lang = $this->polyglot->code2language($timeslot['manager_language']);
         $this->lang->load('email', $usr_lang);
 
         $this->lang->load('global', $usr_lang);
-        $date = new DateTime($leave['startdate']);
-        $startdate = $date->format(lang('global_date_format'));
-        $date = new DateTime($leave['enddate']);
-        $enddate = $date->format(lang('global_date_format'));
+        $date = new DateTime($timeslot['startdate']);
+        $startdate = $date->format(lang('global_datetime_format'));
+        $date = new DateTime($timeslot['enddate']);
+        $enddate = $date->format(lang('global_datetime_format'));
 
         $this->load->library('parser');
         $data = array(
-            'Title' => lang('email_leave_request_validation_title'),
-            'Firstname' => $employee['firstname'],
-            'Lastname' => $employee['lastname'],
+            'Title' => lang('email_booking_request_validation_title'),
+            'CreatorName' => $timeslot['creator_name'],
             'StartDate' => $startdate,
             'EndDate' => $enddate
         );
         
         $message = "";
-        if ($leave['status'] == 3) {
-            $message = $this->parser->parse('emails/' . $employee['language'] . '/request_accepted', $data, TRUE);
-            $this->email->subject(lang('email_leave_request_accept_subject'));
+        if ($timeslot['status'] == 3) {
+            $message = $this->parser->parse('emails/' . $timeslot['creator_email'] . '/request_accepted', $data, TRUE);
+            $this->email->subject(lang('email_booking_request_accept_subject'));
         } else {
-            $message = $this->parser->parse('emails/' . $employee['language'] . '/request_rejected', $data, TRUE);
-            $this->email->subject(lang('email_leave_request_reject_subject'));
+            $message = $this->parser->parse('emails/' . $timeslot['creator_email'] . '/request_rejected', $data, TRUE);
+            $this->email->subject(lang('email_booking_request_reject_subject'));
         }
         if ($this->email->mailer_engine== 'phpmailer') {
             $this->email->phpmailer->Encoding = 'quoted-printable';
@@ -231,7 +308,7 @@ class Timeslots extends CI_Controller {
         } else {
            $this->email->from('do.not@reply.me', 'LMS');
         }
-        $this->email->to($employee['email']);
+        $this->email->to($timeslot['manager_email']);
         $this->email->message($message);
         $this->email->send();
     }

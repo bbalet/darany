@@ -37,17 +37,20 @@ $(document).ready(function() {
 </script>
 <?php } ?>
 
-<h1><?php echo lang('timeslots_room_title');?>&nbsp;<span class="muted">(<?php echo $room['name']; ?>)</span></h1>
+<h1><?php echo lang('timeslots_validation_title');?></h1>
+
+<div class="row-fluid"><div class="span12"><?php echo lang('timeslots_validation_description');?></div></div>
 
 <table cellpadding="0" cellspacing="0" border="0" class="display" id="timeslots" width="100%">
     <thead>
         <tr>
-            <th><?php echo lang('timeslots_room_thead_id');?></th>
-            <th><?php echo lang('timeslots_room_thead_startdate');?></th>
-            <th><?php echo lang('timeslots_room_thead_enddate');?></th>
-            <th><?php echo lang('timeslots_room_thead_status');?></th>
-            <th><?php echo lang('timeslots_room_thead_creator');?></th>
-            <th><?php echo lang('timeslots_room_thead_note');?></th>
+            <th><?php echo lang('timeslots_validation_thead_id');?></th>
+            <th><?php echo lang('timeslots_validation_thead_location');?></th>
+             <th><?php echo lang('timeslots_validation_thead_room');?></th>
+            <th><?php echo lang('timeslots_validation_thead_startdate');?></th>
+            <th><?php echo lang('timeslots_validation_thead_enddate');?></th>
+            <th><?php echo lang('timeslots_validation_thead_creator');?></th>
+            <th><?php echo lang('timeslots_validation_thead_note');?></th>
         </tr>
     </thead>
     <tbody>
@@ -62,14 +65,19 @@ $(document).ready(function() {
         <td data-order="<?php echo $timeslot['id']; ?>">
             <?php echo $timeslot['id']; ?>
             <div class="pull-right">
-                <a href="<?php echo base_url();?>timeslots/edit/<?php echo $timeslot['id']; ?>?source=rooms/<?php echo $room['id']; ?>/timeslots" title="<?php echo lang('timeslots_room_tooltip_edit');?>"><i class="icon-pencil"></i></a>
+                <a href="<?php echo base_url();?>timeslots/edit/<?php echo $timeslot['id']; ?>?source=timeslots/validation" title="<?php echo lang('timeslots_validation_tooltip_edit');?>"><i class="icon-pencil"></i></a>
                 &nbsp;
-                <a href="#" class="confirm-delete" data-id="<?php echo $timeslot['id'];?>" title="<?php echo lang('timeslots_room_tooltip_delete');?>"><i class="icon-trash"></i></a>
+                <a href="<?php echo base_url();?>timeslots/accept/<?php echo $timeslot['id']; ?>" title="<?php echo lang('timeslots_validation_tooltip_accept');?>"><i class="icon-ok"></i></a>
+                &nbsp;
+                <a href="<?php echo base_url();?>timeslots/reject/<?php echo $timeslot['id']; ?>" title="<?php echo lang('timeslots_validation_tooltip_reject');?>"><i class="icon-remove"></i></a>
+                &nbsp;
+                <a href="#" class="confirm-delete" data-id="<?php echo $timeslot['id'];?>" title="<?php echo lang('timeslots_validation_tooltip_delete');?>"><i class="icon-trash"></i></a>
             </div>
         </td>
+        <td><?php echo $timeslot['location_name']; ?></td>
+        <td><?php echo $timeslot['room_name']; ?></td>
         <td data-order="<?php echo $tmpStartDate; ?>"><?php echo $startdate; ?></td>
         <td data-order="<?php echo $tmpEndDate; ?>"><?php echo $enddate; ?></td>
-        <td><?php echo lang($timeslot['status_name']); ?></td>
         <td><?php echo $timeslot['creator_name']; ?></td>
         <td><?php echo $timeslot['note']; ?></td>
     </tr>
@@ -83,10 +91,10 @@ $(document).ready(function() {
 
 <div class="row-fluid">
     <div class="span2">
-      <a href="<?php echo base_url();?>leaves/export" class="btn btn-primary"><i class="icon-file icon-white"></i>&nbsp; <?php echo lang('timeslots_room_button_export');?></a>
+      <a href="<?php echo base_url();?>leaves/export" class="btn btn-primary"><i class="icon-file icon-white"></i>&nbsp; <?php echo lang('timeslots_validation_button_export');?></a>
     </div>
     <div class="span2">
-      <a href="<?php echo base_url();?>leaves/create" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i>&nbsp; <?php echo lang('timeslots_room_button_create');?></a>
+      <a href="<?php echo base_url();?>leaves/create" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i>&nbsp; <?php echo lang('timeslots_validation_button_create');?></a>
     </div>
     <div class="span2">&nbsp;</div>
 </div>
@@ -94,15 +102,15 @@ $(document).ready(function() {
 <div id="frmDeleteBooking" class="modal hide fade">
     <div class="modal-header">
         <a href="#" class="close">&times;</a>
-         <h3><?php echo lang('timeslots_room_popup_delete_title');?></h3>
+         <h3><?php echo lang('timeslots_validation_popup_delete_title');?></h3>
     </div>
     <div class="modal-body">
-        <p><?php echo lang('timeslots_room_popup_delete_message');?></p>
-        <p><?php echo lang('timeslots_room_popup_delete_question');?></p>
+        <p><?php echo lang('timeslots_validation_popup_delete_message');?></p>
+        <p><?php echo lang('timeslots_validation_popup_delete_question');?></p>
     </div>
     <div class="modal-footer">
-        <a href="#" id="lnkDeleteBooking" class="btn danger"><?php echo lang('timeslots_room_popup_delete_button_yes');?></a>
-        <a href="#" onclick="$('#frmDeleteBooking').modal('hide');" class="btn secondary"><?php echo lang('timeslots_room_popup_delete_button_no');?></a>
+        <a href="#" id="lnkDeleteBooking" class="btn danger"><?php echo lang('timeslots_validation_popup_delete_button_yes');?></a>
+        <a href="#" onclick="$('#frmDeleteBooking').modal('hide');" class="btn secondary"><?php echo lang('timeslots_validation_popup_delete_button_no');?></a>
     </div>
 </div>
 
@@ -144,7 +152,7 @@ $(document).ready(function() {
       
     //On showing the confirmation pop-up, add the user id at the end of the delete url action
     $('#frmDeleteBooking').on('show', function() {
-        var link = "<?php echo base_url();?>rooms/<?php echo $room['id']; ?>/timeslots/" + $(this).data('id') + "/delete";
+        var link = "<?php echo base_url();?>timeslots/manager/delete/" + $(this).data('id');
         $("#lnkDeleteBooking").attr('href', link);
     });
     

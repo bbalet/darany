@@ -25,9 +25,9 @@ $lang['email_user_create_title'] = 'Your account has been created';
 $lang['email_booking_request_subject'] = '[Darany] Meeting room booking request';
 $lang['email_booking_request_title'] = 'Meeting room booking request';
 
-$lang['email_leave_request_accept_subject'] = '[Darany] Your leave request has been accepted';
-$lang['email_leave_request_reject_subject'] = '[Darany] Your leave request has been rejected';
-$lang['email_leave_request_validation_title'] = 'Leave Request';
+$lang['email_booking_request_accept_subject'] = '[Darany] Your booking request has been accepted';
+$lang['email_booking_request_reject_subject'] = '[Darany] Your booking request has been rejected';
+$lang['email_booking_request_validation_title'] = 'Booking Request';
 
 $lang['email_overtime_request_accept_subject'] = '[Darany] Your overtime request has been accepted';
 $lang['email_overtime_request_reject_subject'] = '[Darany] Your overtime request has been rejected';

@@ -38,4 +38,3 @@ $lang['menu_validation_booking'] = 'Réservations';
 
 $lang['menu_booking_title'] = 'Réservations';
 $lang['menu_booking_requests'] = 'Mes réservations';
-$lang['menu_booking_book'] = 'Réserver une salle de réunion';

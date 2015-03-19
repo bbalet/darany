@@ -76,6 +76,10 @@ $route['rooms/calfeed/(:num)'] = 'rooms/calfeed/$1';
 $route['timeslots/accept/(:num)'] = 'timeslots/accept/$1';
 $route['timeslots/reject/(:num)'] = 'timeslots/reject/$1';
 $route['rooms/(:num)/timeslots'] = 'timeslots/room/$1';
+$route['timeslots/me'] = 'timeslots/user';
+$route['timeslots/validation'] = 'timeslots/validation';
+$route['timeslots/manager/delete/(:num)'] = 'timeslots/delete_validation/$1';
+$route['timeslots/me/delete/(:num)'] = 'timeslots/delete_booking/$1';
 $route['rooms/(:num)/timeslots/(:num)/delete'] = 'timeslots/delete/$1/$2';
 $route['timeslots'] = 'timeslots';
 

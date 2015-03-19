@@ -21,9 +21,9 @@
 <html>
     <body>
         <h3>{Title}</h3>
-        Dear {Firstname} {Lastname}, <br />
+        Dear {CreatorName}, <br />
         <br />
-        The leave you've requested has been rejected. Below, the details :
+        The booking you've requested has been rejected. Below, the details :
         <table border="0">
             <tr>
                 <td>From &nbsp;</td><td>{StartDate}</td>

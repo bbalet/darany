@@ -25,9 +25,9 @@ $lang['email_user_create_title'] = 'Votre compte a été créé';
 $lang['email_booking_request_subject'] = '[Darany] Demande de réservation d\'une salle de réunion';
 $lang['email_booking_request_title'] = 'Demande de réservation d\'une salle de réunion';
 
-$lang['email_leave_request_accept_subject'] = '[Darany] Votre demande d\'absence a été acceptée';
-$lang['email_leave_request_reject_subject'] = '[Darany] Votre demande d\'absence a été refusée';
-$lang['email_leave_request_validation_title'] = 'Demande d\'absence';
+$lang['email_booking_request_accept_subject'] = '[Darany] Votre demande de réservation a été acceptée';
+$lang['email_booking_request_reject_subject'] = '[Darany] Votre demande de réservation a été refusée';
+$lang['email_booking_request_validation_title'] = 'Demande de réservation';
 
 $lang['email_overtime_request_accept_subject'] = '[Darany] Votre déclaration d\'heure supplémentaire a été acceptée';
 $lang['email_overtime_request_reject_subject'] = '[Darany] Votre déclaration d\'heure supplémentaire a été refusée';

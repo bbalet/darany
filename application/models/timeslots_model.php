@@ -75,7 +75,48 @@ class Timeslots_model extends CI_Model {
         $query = $this->db->get('timeslots');
         return $query->result_array();
     }
+    
+    /**
+     * Return the list of timeslots booked by a given user
+     * @param int $user id of the user
+     * @return array record of timeslots
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     */
+    public function get_timeslots_user($user) {
+        $this->db->select('status.name as status_name');
+        $this->db->select('rooms.name as room_name');
+        $this->db->select('locations.name as location_name');
+        $this->db->select('timeslots.*');
+        $this->db->join('status', 'status.id = timeslots.status');
+        $this->db->join('rooms', 'timeslots.room = rooms.id');
+        $this->db->join('locations', 'rooms.location = locations.id');
+        $this->db->where('timeslots.creator', $user);
+        $this->db->order_by('startdate' , 'desc');
+        $query = $this->db->get('timeslots');
+        return $query->result_array();
+    }
 
+    /**
+     * Return the list of timeslots that must be validated by the room manager
+     * @param int $user id of the manager
+     * @return array record of timeslots
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     */
+    public function get_timeslots_validation($user) {
+        $this->db->select('rooms.name as room_name');
+        $this->db->select('locations.name as location_name');
+        $this->db->select('CONCAT_WS(\' \', users.firstname, users.lastname) as creator_name', FALSE);
+        $this->db->select('timeslots.*');
+        $this->db->join('rooms', 'timeslots.room = rooms.id');
+        $this->db->join('locations', 'rooms.location = locations.id');
+        $this->db->join('users', 'users.id = timeslots.creator');
+        $this->db->where('rooms.manager', $user);
+        $this->db->where('timeslots.status', 2);    //Requested
+        $this->db->order_by('startdate' , 'desc');
+        $query = $this->db->get('timeslots');
+        return $query->result_array();
+    }
+    
     /**
      * Delete a timeslot from the database
      * @param int $id identifier of the timeslot
@@ -92,14 +133,52 @@ class Timeslots_model extends CI_Model {
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function get_timeslot($id) {
+        $this->db->select('mgr.id as manager_id');
+        $this->db->select('mgr.email as manager_email');
+        $this->db->select('mgr.language as manager_language');
+        $this->db->select('usr.email as creator_email');
         $this->db->select('status.name as status_name');
-        $this->db->select('CONCAT_WS(\' \', users.firstname, users.lastname) as creator_name', FALSE);
+        $this->db->select('CONCAT_WS(\' \', usr.firstname, usr.lastname) as creator_name', FALSE);
+        $this->db->select('rooms.name as room_name');
+        $this->db->select('locations.name as location_name');
         $this->db->select('timeslots.*');
+        $this->db->join('users usr', 'timeslots.creator = usr.id');
+        $this->db->join('rooms', 'timeslots.room = rooms.id');
+        $this->db->join('locations', 'rooms.location = locations.id');
+        $this->db->join('users mgr', 'rooms.manager = mgr.id');
         $this->db->join('status', 'status.id = timeslots.status');
-        $this->db->join('users', 'users.id = timeslots.creator');
         $this->db->where('timeslots.id', $id);
         $query = $this->db->get('timeslots');
-        return $query->result_array();
+        $result = $query->result_array();
+        return $result[0];
+    }
+    
+    /**
+     * Accept a booking request
+     * @param int $id timeslot identifier
+     * @return int number of affected rows
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     */
+    public function accept($id) {
+        $data = array(
+            'status' => 3
+        );
+        $this->db->where('id', $id);
+        return $this->db->update('timeslots', $data);
+    }
+
+    /**
+     * Reject a booking request
+     * @param int $id timeslots identifier
+     * @return int number of affected rows
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     */
+    public function reject($id) {
+        $data = array(
+            'status' => 4
+        );
+        $this->db->where('id', $id);
+        return $this->db->update('timeslots', $data);
     }
     
     /**

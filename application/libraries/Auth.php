@@ -99,8 +99,11 @@ class Auth {
             case 'timeslots_list' :
             case 'timeslots_export' :
             case 'timeslots_create' :
-            case 'timeslots_edit' :            
+            case 'timeslots_edit' :
+            case 'timeslots_accept' :
+            case 'timeslots_reject' :
 return true;
+                break;
 
             default:
                 return false;

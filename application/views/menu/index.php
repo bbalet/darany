@@ -79,7 +79,7 @@ $this->lang->load('menu', $language);?>
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo lang('menu_validation_title');?> <b class="caret"></b></a>
                   <ul class="dropdown-menu">
-                    <li><a href="<?php echo base_url();?>requests"><?php echo lang('menu_validation_booking');?></a></li>
+                    <li><a href="<?php echo base_url();?>timeslots/validation"><?php echo lang('menu_validation_booking');?></a></li>
                   </ul>
                 </li>
               </ul>
@@ -88,8 +88,7 @@ $this->lang->load('menu', $language);?>
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo lang('menu_booking_title');?> <b class="caret"></b></a>
                   <ul class="dropdown-menu">
-                    <li><a href="<?php echo base_url();?>booking/requests"><?php echo lang('menu_booking_requests');?></a></li>
-                    <li><a href="<?php echo base_url();?>bookings/book"><?php echo lang('menu_booking_book');?></a></li>
+                    <li><a href="<?php echo base_url();?>timeslots/me"><?php echo lang('menu_booking_requests');?></a></li>
                   </ul>
                 </li>
               </ul>

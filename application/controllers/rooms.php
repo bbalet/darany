@@ -99,6 +99,9 @@ class Rooms extends CI_Controller {
         $this->auth->check_is_granted('rooms_list');
         $data = $this->getUserContext();
         $data['room'] = $this->rooms_model->get_room($room);
+        $this->load->model('timeslots_model');
+        $data['end_timeslot'] = $this->timeslots_model->end_full_timeslot($room);
+        $data['next_timeslot'] = $this->timeslots_model->next_timeslot($room);
         $data['title'] = lang('rooms_index_title');
         $this->load->view('templates/header', $data);
         $this->load->view('menu/index', $data);
