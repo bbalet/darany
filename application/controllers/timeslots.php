@@ -294,10 +294,10 @@ class Timeslots extends CI_Controller {
         
         $message = "";
         if ($timeslot['status'] == 3) {
-            $message = $this->parser->parse('emails/' . $timeslot['creator_email'] . '/request_accepted', $data, TRUE);
+            $message = $this->parser->parse('emails/' . $timeslot['creator_language'] . '/request_accepted', $data, TRUE);
             $this->email->subject(lang('email_booking_request_accept_subject'));
         } else {
-            $message = $this->parser->parse('emails/' . $timeslot['creator_email'] . '/request_rejected', $data, TRUE);
+            $message = $this->parser->parse('emails/' . $timeslot['creator_language'] . '/request_rejected', $data, TRUE);
             $this->email->subject(lang('email_booking_request_reject_subject'));
         }
         if ($this->email->mailer_engine== 'phpmailer') {
@@ -308,7 +308,7 @@ class Timeslots extends CI_Controller {
         } else {
            $this->email->from('do.not@reply.me', 'LMS');
         }
-        $this->email->to($timeslot['manager_email']);
+        $this->email->to($timeslot['creator_email']);
         $this->email->message($message);
         $this->email->send();
     }

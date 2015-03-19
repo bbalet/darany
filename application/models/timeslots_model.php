@@ -135,7 +135,7 @@ class Timeslots_model extends CI_Model {
     public function get_timeslot($id) {
         $this->db->select('mgr.id as manager_id');
         $this->db->select('mgr.email as manager_email');
-        $this->db->select('mgr.language as manager_language');
+        $this->db->select('usr.language as creator_language');
         $this->db->select('usr.email as creator_email');
         $this->db->select('status.name as status_name');
         $this->db->select('CONCAT_WS(\' \', usr.firstname, usr.lastname) as creator_name', FALSE);
