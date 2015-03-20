@@ -78,17 +78,10 @@ $(document).ready(function() {
 <?php endforeach ?>
     </tbody>
 </table>
-	</div>
-</div><div class="row-fluid"><div class="span12">&nbsp;</div></div>
-<div class="row-fluid">
-    <div class="span2">
-      <a href="<?php echo base_url();?>leaves/export" class="btn btn-primary"><i class="icon-file icon-white"></i>&nbsp; <?php echo lang('timeslots_user_button_export');?></a>
     </div>
-    <div class="span2">
-      <a href="<?php echo base_url();?>leaves/create" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i>&nbsp; <?php echo lang('timeslots_user_button_create');?></a>
-    </div>
-    <div class="span2">&nbsp;</div>
 </div>
+
+<div class="row-fluid"><div class="span12">&nbsp;</div></div>
 
 <div id="frmDeleteBooking" class="modal hide fade">
     <div class="modal-header">

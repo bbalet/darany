@@ -55,7 +55,7 @@ $(document).ready(function() {
             <?php echo $room['id'];?>
             <div class="pull-right">
                 <a href="#" class="confirm-delete" data-id="<?php echo $room['id'];?>" title="<?php echo lang('rooms_index_tooltip_delete');?>"><i class="icon-trash"></i></a>&nbsp; 
-                <a href="<?php echo base_url();?>locations/edit/<?php echo $room['id']; ?>" title="<?php echo lang('rooms_index_tooltip_edit');?>"><i class="icon-pencil"></i></a>
+                <a href="<?php echo base_url();?>locations/<?php echo $location['id']; ?>/rooms/<?php echo $room['id']; ?>/edit" title="<?php echo lang('rooms_index_tooltip_edit');?>"><i class="icon-pencil"></i></a>
                 <a href="<?php echo base_url();?>rooms/<?php echo $room['id'];?>/timeslots" title="<?php echo lang('rooms_index_tooltip_timeslot');?>"><i class="icon-list-alt"></i></a>&nbsp;
                 <a href="<?php echo base_url();?>rooms/calendar/<?php echo $room['id'];?>" title="<?php echo lang('rooms_index_tooltip_calendar');?>"><i class="icon-calendar"></i></a>&nbsp;
                 <a href="#" class="qrcode-modal" data-id="<?php echo $room['id'];?>" role="button" data-toggle="modal" title="<?php echo lang('rooms_index_tooltip_qrcode');?>"><i class="icon-qrcode"></i></a>&nbsp;

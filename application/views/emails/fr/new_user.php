@@ -25,7 +25,7 @@
     </head>
     <body>
         <h3>{Title}</h3>
-        Bienvenue dans LMS {Firstname} {Lastname}. Veuillez utiliser ces identifiants pour <a href="{BaseURL}">vous connecter à l'application</a> :
+        Bienvenue dans Darany {Firstname} {Lastname}. Veuillez utiliser ces identifiants pour <a href="{BaseURL}">vous connecter à l'application</a> :
         <table border="0">
             <tr>
                 <td>Identifiant</td><td>{Login}</td>
@@ -34,6 +34,6 @@
                 <td>Mot de passe</td><td>{Password}</td>
             </tr>            
         </table>
-        Une fois connecté, vous pouvez modifier votre mot de passe comme expliqué <a href="http://www.leave-management-system.org/how-to-change-my-password.html" title="Lien vers la documentation" target="_blank">dans cet article (en anglais)</a>.
+        Une fois connecté, vous pouvez modifier votre mot de passe.
     </body>
 </html>

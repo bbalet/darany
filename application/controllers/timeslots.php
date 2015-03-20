@@ -312,60 +312,7 @@ class Timeslots extends CI_Controller {
         $this->email->message($message);
         $this->email->send();
     }
-    
-    /**
-     * Action: export the list of all leave requests into an Excel file
-     */
-    public function export($filter = 'requested') {
-        $this->load->library('excel');
-        $this->excel->setActiveSheetIndex(0);
-
-        $this->excel->getActiveSheet()->setTitle(lang('requests_export_title'));
-        $this->excel->getActiveSheet()->setCellValue('A1', lang('requests_export_thead_id'));
-        $this->excel->getActiveSheet()->setCellValue('B1', lang('requests_export_thead_fullname'));
-        $this->excel->getActiveSheet()->setCellValue('C1', lang('requests_export_thead_startdate'));
-        $this->excel->getActiveSheet()->setCellValue('D1', lang('requests_export_thead_startdate_type'));
-        $this->excel->getActiveSheet()->setCellValue('E1', lang('requests_export_thead_enddate'));
-        $this->excel->getActiveSheet()->setCellValue('F1', lang('requests_export_thead_enddate_type'));
-        $this->excel->getActiveSheet()->setCellValue('G1', lang('requests_export_thead_duration'));
-        $this->excel->getActiveSheet()->setCellValue('H1', lang('requests_export_thead_type'));
-        $this->excel->getActiveSheet()->setCellValue('I1', lang('requests_export_thead_cause'));
-        $this->excel->getActiveSheet()->setCellValue('J1', lang('requests_export_thead_status'));
-        $this->excel->getActiveSheet()->getStyle('A1:J1')->getFont()->setBold(true);
-        $this->excel->getActiveSheet()->getStyle('A1:J1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-
-        if ($filter == 'all') {
-            $showAll = true;
-        } else {
-            $showAll = false;
-        }
-        $requests = $this->leaves_model->requests($this->user_id, $showAll);
-        $this->load->model('status_model');
-        $this->load->model('types_model');
         
-        $line = 2;
-        foreach ($requests as $request) {
-            $this->excel->getActiveSheet()->setCellValue('A' . $line, $request['id']);
-            $this->excel->getActiveSheet()->setCellValue('B' . $line, $request['firstname'] . ' ' . $request['lastname']);
-            $this->excel->getActiveSheet()->setCellValue('C' . $line, $request['startdate']);
-            $this->excel->getActiveSheet()->setCellValue('D' . $line, $request['startdatetype']);
-            $this->excel->getActiveSheet()->setCellValue('E' . $line, $request['enddate']);
-            $this->excel->getActiveSheet()->setCellValue('F' . $line, $request['enddatetype']);
-            $this->excel->getActiveSheet()->setCellValue('G' . $line, $request['duration']);
-            $this->excel->getActiveSheet()->setCellValue('H' . $line, $this->types_model->get_label($request['type']));
-            $this->excel->getActiveSheet()->setCellValue('I' . $line, $request['cause']);
-            $this->excel->getActiveSheet()->setCellValue('J' . $line, $this->status_model->get_label($request['status']));
-            $line++;
-        }
-
-        $filename = 'requests.xls';
-        header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="' . $filename . '"');
-        header('Cache-Control: max-age=0');
-        $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
-        $objWriter->save('php://output');
-    }
-    
     /**
      * Internal utility function
      * make sure a resource is reloaded every time

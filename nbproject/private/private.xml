@@ -4,10 +4,18 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/wamp/www/darany/application/config/routes.php</file>
-            <file>file:/C:/wamp/www/darany/application/views/rooms/status.php</file>
-            <file>file:/C:/wamp/www/darany/application/views/timeslots/room.php</file>
+            <file>file:/C:/wamp/www/darany/application/views/emails/en/request_rejected.php</file>
             <file>file:/C:/wamp/www/darany/application/models/timeslots_model.php</file>
-            <file>file:/C:/wamp/www/darany/application/controllers/rooms.php</file>
+            <file>file:/C:/wamp/www/darany/application/language/french/timeslots_lang.php</file>
+            <file>file:/C:/wamp/www/darany/application/language/french/email_lang.php</file>
+            <file>file:/C:/wamp/www/darany/application/views/emails/en/request_accepted.php</file>
+            <file>file:/C:/wamp/www/darany/application/views/timeslots/validation.php</file>
+            <file>file:/C:/wamp/www/darany/application/language/english/timeslots_lang.php</file>
+            <file>file:/C:/wamp/www/darany/application/language/english/email_lang.php</file>
+            <file>file:/C:/wamp/www/darany/application/controllers/timeslots.php</file>
+            <file>file:/C:/wamp/www/darany/application/views/emails/fr/request_rejected.php</file>
+            <file>file:/C:/wamp/www/darany/application/views/emails/fr/request_accepted.php</file>
+            <file>file:/C:/wamp/www/darany/application/logs/log-2015-03-19.php</file>
         </group>
     </open-files>
 </project-private>

@@ -206,28 +206,30 @@ class Rooms extends CI_Controller {
     }
 
     /**
-     * Display a form that allows editing a leave type
+     * Display a form that allows editing a room
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
-    public function edit($id) {
+    public function edit($location, $room) {
         $this->auth->check_is_granted('rooms_edit');
         $data = $this->getUserContext();
         $this->load->helper('form');
         $this->load->library('form_validation');
         $data['title'] = lang('positions_edit_title');
-        $data['position'] = $this->positions_model->get_positions($id);
+        $data['room'] = $this->rooms_model->get_room($room);
         
-        $this->form_validation->set_rules('name', lang('positions_edit_field_name'), 'required|xss_clean');
-        $this->form_validation->set_rules('description', lang('positions_edit_field_description'), 'xss_clean');
+        $this->form_validation->set_rules('name', lang('rooms_create_field_name'), 'required|xss_clean');
+        $this->form_validation->set_rules('manager', lang('rooms_create_field_manager'), 'required|xss_clean');
+        $this->form_validation->set_rules('floor', lang('rooms_create_field_floor'), 'xss_clean');
+        $this->form_validation->set_rules('description', lang('rooms_create_field_description'), 'xss_clean');
         
         if ($this->form_validation->run() === FALSE) {
             $this->load->view('templates/header', $data);
             $this->load->view('menu/index', $data);
-            $this->load->view('positions/edit', $data);
+            $this->load->view('rooms/edit', $data);
             $this->load->view('templates/footer');
         } else {
             $this->positions_model->update_positions($id);
-            $this->session->set_flashdata('msg', lang('positions_edit_flash_msg'));
+            $this->session->set_flashdata('msg', lang('rooms_edit_flash_msg'));
             redirect('locations/' . $location . '/rooms');
         }
     }

@@ -21,7 +21,7 @@
 <html>
     <body>
         <h3>{Title}</h3>
-        Welcome to LMS {Firstname} {Lastname}. Please use these credentials to <a href="{BaseURL}">login to the system</a> :
+        Welcome to Darany {Firstname} {Lastname}. Please use these credentials to <a href="{BaseURL}">login to the system</a> :
         <table border="0">
             <tr>
                 <td>Login</td><td>{Login}</td>
@@ -30,6 +30,6 @@
                 <td>Password</td><td>{Password}</td>
             </tr>            
         </table>
-        Once connected, you can change your password, as explained <a href="http://www.leave-management-system.org/how-to-change-my-password.html" title="Link to documentation" target="_blank">here</a>.
+        Once connected, you can change your password.
     </body>
 </html>
