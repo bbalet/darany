@@ -224,7 +224,7 @@ $config['cache_path'] = '';
 | MUST set an encryption key.  See the user guide for info.
 |
 */
-$config['encryption_key'] = 'YJ9FljXV4axG7QTzEzbRaUBFwi0FzIls';
+$config['encryption_key'] = 'Y1mpLtyjP0HcJRzb7X98eJWPTsBxKLhx';
 
 /*
 |--------------------------------------------------------------------------
@@ -244,13 +244,13 @@ $config['encryption_key'] = 'YJ9FljXV4axG7QTzEzbRaUBFwi0FzIls';
 | 'sess_time_to_update'		= how many seconds between CI refreshing Session Information
 |
 */
-$config['sess_cookie_name']		= 'ci_session';
-$config['sess_expiration']		= 7200;
+$config['sess_cookie_name']	= 'darany_session';
+$config['sess_expiration']	= 7200;
 $config['sess_expire_on_close']	= FALSE;
 $config['sess_encrypt_cookie']	= TRUE;
 $config['sess_use_database']	= FALSE;
-$config['sess_table_name']		= 'ci_sessions';
-$config['sess_match_ip']		= FALSE;
+$config['sess_table_name']	= 'ci_sessions';
+$config['sess_match_ip']	= FALSE;
 $config['sess_match_useragent']	= TRUE;
 $config['sess_time_to_update']	= 300;
 

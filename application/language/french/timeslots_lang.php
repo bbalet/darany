@@ -50,7 +50,7 @@ $lang['timeslots_user_popup_delete_question'] = 'Voulez-vous continuer ?';
 $lang['timeslots_user_popup_delete_button_yes'] = 'Oui';
 $lang['timeslots_user_popup_delete_button_no'] = 'Non';
 
-$lang['timeslots_edit_title'] = 'Modifier une réserver de salle de réunion';
+$lang['timeslots_edit_title'] = 'Modifier une demande de réservation';
 $lang['timeslots_edit_field_startdate'] = 'Date de début';
 $lang['timeslots_edit_field_enddate'] = 'Date de fin';
 $lang['timeslots_edit_field_status'] = 'Statut';

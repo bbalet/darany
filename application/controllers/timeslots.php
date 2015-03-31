@@ -171,9 +171,10 @@ class Timeslots extends CI_Controller {
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function edit($timeslot) {
-        //$this->auth->check_is_granted('rooms_list');
+        $this->auth->check_is_granted('timeslots_edit');
         $data = $this->getUserContext();
-        $data['room'] = $this->rooms_model->get_room($room);
+        $this->load->model('rooms_model');
+        $data['room'] = $this->rooms_model->get_room_from_timeslot($timeslot);
         $data['title'] = lang('timeslots_edit_title');
         
         $this->load->helper('form');

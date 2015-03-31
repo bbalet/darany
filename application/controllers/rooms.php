@@ -228,7 +228,7 @@ class Rooms extends CI_Controller {
             $this->load->view('rooms/edit', $data);
             $this->load->view('templates/footer');
         } else {
-            $this->positions_model->update_positions($id);
+            $this->rooms_model->update_rooms($id);
             $this->session->set_flashdata('msg', lang('rooms_edit_flash_msg'));
             redirect('locations/' . $location . '/rooms');
         }

@@ -1,7 +1,7 @@
 -- ---------------------------------------------------
--- LMSimple Schema definition
+-- Darany Schema definition
 -- 
--- This file is part of lmsimple.
+-- This file is part of darany.
 -- 
 --  darany is free software: you can redistribute it and/or modify
 --  it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
 --  GNU General Public License for more details.
 -- 
 --  You should have received a copy of the GNU General Public License
---  along with lms.  If not, see <http://www.gnu.org/licenses/>.
+--  along with darany.  If not, see <http://www.gnu.org/licenses/>.
 --
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";

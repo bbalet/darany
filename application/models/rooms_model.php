@@ -126,6 +126,24 @@ class Rooms_model extends CI_Model {
     }
     
     /**
+     * Update a room into the database.
+     * Update data are coming from a HTML form
+     * @return int number of affected rows
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     */
+    public function update_rooms() {
+        $data = array(
+            'manager' => $this->input->post('manager'),
+            'name' => $this->input->post('name'),
+            'floor' => $this->input->post('floor'),
+            'description' => $this->input->post('description')
+        );
+
+        $this->db->where('id', $this->input->post('id'));
+        return $this->db->update('rooms', $data);
+    }
+    
+    /**
      * Delete a room from the database
      * @param int $id identifier of the room
      * @author Benjamin BALET <benjamin.balet@gmail.com>

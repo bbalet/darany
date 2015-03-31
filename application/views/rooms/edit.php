@@ -38,7 +38,7 @@
     <input type="text" name="floor" id="floor" value="<?php echo $room['floor']; ?>" /><br />
     
     <label for="description"><?php echo lang('rooms_edit_field_description');?></label>
-    <textarea type="input" name="description" id="description" value="<?php echo $room['description']; ?>" /></textarea>
+    <textarea type="input" name="description" id="description" /><?php echo $room['description']; ?></textarea>
 
     <br /><br />
     <button type="submit" class="btn btn-primary"><i class="icon-ok icon-white"></i>&nbsp;<?php echo lang('rooms_edit_button_update');?></button>
