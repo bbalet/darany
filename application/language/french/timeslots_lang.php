@@ -16,7 +16,7 @@
  * along with darany. If not, see <http://www.gnu.org/licenses/>.
  */
 
-$lang['timeslots_room_title'] = 'Demandes de réseravtion';
+$lang['timeslots_room_title'] = 'Demandes de réservation';
 $lang['timeslots_room_tooltip_edit'] = 'modifier';
 $lang['timeslots_room_tooltip_delete'] = 'supprimer';
 $lang['timeslots_room_thead_id'] = 'N°';
@@ -34,7 +34,7 @@ $lang['timeslots_room_popup_delete_button_no'] = 'Non';
 
 $lang['timeslots_delete_flash_msg'] = 'La demande de réservation a été supprimée avec succès.';
 
-$lang['timeslots_user_title'] = 'Demandes de réseravtion';
+$lang['timeslots_user_title'] = 'Demandes de réservation';
 $lang['timeslots_user_tooltip_edit'] = 'modifier';
 $lang['timeslots_user_tooltip_delete'] = 'supprimer';
 $lang['timeslots_user_thead_id'] = 'N°';

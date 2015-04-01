@@ -57,7 +57,7 @@ $lang['timeslots_edit_field_status'] = 'Status';
 $lang['timeslots_edit_field_note'] = 'Note';
 $lang['timeslots_edit_button_book'] = 'Update the booking';
 $lang['timeslots_edit_button_cancel'] = 'Cancel';
-$lang['timeslots_edit_flash_msg'] = 'The room booking has been succesfully updated.';
+$lang['timeslots_edit_flash_msg'] = 'The timeslot has been succesfully updated.';
 
 $lang['timeslots_validation_title'] = 'Booking requests validation';
 $lang['timeslots_validation_description'] = 'If you are not the manager of a meeting room, this list will be empty.';

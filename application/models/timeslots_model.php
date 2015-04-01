@@ -59,6 +59,22 @@ class Timeslots_model extends CI_Model {
     }
     
     /**
+     * Update a timeslot. Modified data are coming from an HTML form.
+     * @return int number of affected rows
+     * @author Benjamin BALET <benjamin.balet@gmail.com>
+     */
+    public function update_timeslots() {
+        $data = array(
+            'startdate' => $this->input->post('startdate'),
+            'enddate' => $this->input->post('enddate'),
+            'note' => $this->input->post('note'),
+            'status' => $this->input->post('status')
+        );
+        $this->db->where('id', $this->input->post('id'));
+        return $this->db->update('timeslots', $data);
+    }
+    
+    /**
      * Return the list of timeslots for a given room
      * @param int $room id of a room
      * @return array record of timeslots
@@ -139,6 +155,7 @@ class Timeslots_model extends CI_Model {
         $this->db->select('usr.email as creator_email');
         $this->db->select('status.name as status_name');
         $this->db->select('CONCAT_WS(\' \', usr.firstname, usr.lastname) as creator_name', FALSE);
+        $this->db->select('rooms.id as room_id');
         $this->db->select('rooms.name as room_name');
         $this->db->select('locations.name as location_name');
         $this->db->select('timeslots.*');

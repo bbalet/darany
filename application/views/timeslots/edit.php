@@ -22,21 +22,31 @@
 
 <?php
 $attributes = array('id' => 'target');
-echo form_open('rooms/book/' . $room['id'], $attributes); ?>
-    <input type="hidden" name="creator" value="<?php echo $user_id;?>" />
-    <input type="hidden" name="room" value="<?php echo $room['id'];?>" />
-    <input type="hidden" name="status" value="2" />
+
+//  'rooms/(:num)/timeslots/(:num)/edit
+echo form_open('rooms/' . $timeslot['room_id'] . '/timeslots/' . $timeslot['id'] . '/edit', $attributes); ?>
+    <input type="hidden" name="id" value="<?php echo $timeslot['id'];?>" />
 
     <label for="viz_startdate"><?php echo lang('timeslots_edit_field_startdate');?></label>
-    <input type="text" id="viz_startdate" name="viz_startdate" /><br />
-    <input type="hidden" name="startdate" id="startdate" />
+    <input type="text" id="viz_startdate" name="viz_startdate" value="<?php $date = new DateTime($timeslot['startdate']); echo $date->format(lang('global_datetime_format'));?>" /><br />
+    <input type="hidden" name="startdate" id="startdate" value="<?php echo $timeslot['startdate']?>" />
     
     <label for="viz_enddate"><?php echo lang('timeslots_edit_field_enddate');?></label>
-    <input type="text" id="viz_enddate" name="viz_enddate" /><br />
-    <input type="hidden" name="enddate" id="enddate" />
+    <input type="text" id="viz_enddate" name="viz_enddate" value="<?php $date = new DateTime($timeslot['enddate']); echo $date->format(lang('global_datetime_format'));?>" /><br />
+    <input type="hidden" name="enddate" id="enddate" value="<?php echo $timeslot['enddate']?>" />
     
     <label for="note"><?php echo lang('timeslots_edit_field_note');?></label>
-    <textarea type="input" name="note" id="note" /></textarea>
+    <textarea type="input" name="note" id="note" /><?php echo $timeslot['note']?></textarea>
+
+    <label for="status"><?php echo lang('timeslots_edit_field_status');?></label>
+    <select name="status">
+        <!--<option value="1" <?php if ($timeslot['status'] == 1) echo 'selected'; ?>><?php echo lang('Planned');?></option>//-->
+        <option value="2" <?php if ($timeslot['status'] == 2) echo 'selected'; ?>><?php echo lang('Requested');?></option>
+        <?php if ($is_admin) {?>
+        <option value="3" <?php if ($timeslot['status'] == 3) echo 'selected'; ?>><?php echo lang('Accepted');?></option>
+        <option value="4" <?php if ($timeslot['status'] == 4) echo 'selected'; ?>><?php echo lang('Rejected');?></option>        
+        <?php } ?>
+    </select><br />
 
     <br /><br />
     <button id="send" class="btn btn-primary"><i class="icon-ok icon-white"></i>&nbsp;<?php echo lang('timeslots_edit_button_book');?></button>
@@ -63,7 +73,7 @@ if ($language_code != 'en') { ?>
             altField: "#startdate",
             altFieldTimeOnly: false,
             altFormat: "yy-mm-dd",
-            altTimeFormat: "h:m",
+            altTimeFormat: "H:m",
             onClose: function(dateText, inst) {
                     if (endDateTextBox.val() != '') {
                             var testStartDate = startDateTextBox.datetimepicker('getDate');
@@ -84,7 +94,7 @@ if ($language_code != 'en') { ?>
             altField: "#enddate",
             altFieldTimeOnly: false,
             altFormat: "yy-mm-dd",
-            altTimeFormat: "h:m",
+            altTimeFormat: "H:m",
             onClose: function(dateText, inst) {
                     if (startDateTextBox.val() != '') {
                             var testStartDate = startDateTextBox.datetimepicker('getDate');

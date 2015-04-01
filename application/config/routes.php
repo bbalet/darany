@@ -80,6 +80,7 @@ $route['timeslots/me'] = 'timeslots/user';
 $route['timeslots/validation'] = 'timeslots/validation';
 $route['timeslots/manager/delete/(:num)'] = 'timeslots/delete_validation/$1';
 $route['timeslots/me/delete/(:num)'] = 'timeslots/delete_booking/$1';
+$route['rooms/(:num)/timeslots/(:num)/edit'] = 'timeslots/edit/$1/$2';
 $route['rooms/(:num)/timeslots/(:num)/delete'] = 'timeslots/delete/$1/$2';
 $route['timeslots'] = 'timeslots';
 

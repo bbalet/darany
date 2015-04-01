@@ -170,17 +170,14 @@ class Timeslots extends CI_Controller {
      * Display the form that allows to edit a timeslot
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
-    public function edit($timeslot) {
+    public function edit($room, $timeslot) {
         $this->auth->check_is_granted('timeslots_edit');
         $data = $this->getUserContext();
-        $this->load->model('rooms_model');
-        $data['room'] = $this->rooms_model->get_room_from_timeslot($timeslot);
+        $data['timeslot'] = $this->timeslots_model->get_timeslot($timeslot);
         $data['title'] = lang('timeslots_edit_title');
         
         $this->load->helper('form');
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('room', '', 'required|xss_clean');
-        $this->form_validation->set_rules('creator', '', 'required|xss_clean');
         $this->form_validation->set_rules('startdate', lang('timeslots_edit_field_startdate'), 'required|xss_clean');
         $this->form_validation->set_rules('enddate', lang('timeslots_edit_field_enddate'), 'required|xss_clean');
         $this->form_validation->set_rules('status', lang('timeslots_edit_field_status'), 'required|xss_clean');
@@ -192,14 +189,13 @@ class Timeslots extends CI_Controller {
             $this->load->view('timeslots/edit', $data);
             $this->load->view('templates/footer');
         } else {
-            $this->load->model('timeslots_model');
-            $timeslot = $this->timeslots_model->book_room();
+            $result = $this->timeslots_model->update_timeslots();
             //If the status is requested, send an email to the manager
             if ($this->input->post('status') == 2) {
                 $this->sendMail($timeslot);
             }
             $this->session->set_flashdata('msg', lang('timeslots_edit_flash_msg'));
-            redirect('timeslots/me');
+            redirect('rooms/' . $room . '/timeslots');
         }
     }
     
@@ -272,11 +268,10 @@ class Timeslots extends CI_Controller {
     private function sendMail($id)
     {
         $timeslot = $this->timeslots_model->get_timeslot($id);
-
         //Send an e-mail to the employee
         $this->load->library('email');
         $this->load->library('polyglot');
-        $usr_lang = $this->polyglot->code2language($timeslot['manager_language']);
+        $usr_lang = $this->polyglot->code2language($timeslot['creator_language']);
         $this->lang->load('email', $usr_lang);
 
         $this->lang->load('global', $usr_lang);

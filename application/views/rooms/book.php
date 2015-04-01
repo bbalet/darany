@@ -63,7 +63,7 @@ if ($language_code != 'en') { ?>
             altField: "#startdate",
             altFieldTimeOnly: false,
             altFormat: "yy-mm-dd",
-            altTimeFormat: "h:m",
+            altTimeFormat: "H:m",
             onClose: function(dateText, inst) {
                     if (endDateTextBox.val() != '') {
                             var testStartDate = startDateTextBox.datetimepicker('getDate');
@@ -84,7 +84,7 @@ if ($language_code != 'en') { ?>
             altField: "#enddate",
             altFieldTimeOnly: false,
             altFormat: "yy-mm-dd",
-            altTimeFormat: "h:m",
+            altTimeFormat: "H:m",
             onClose: function(dateText, inst) {
                     if (startDateTextBox.val() != '') {
                             var testStartDate = startDateTextBox.datetimepicker('getDate');

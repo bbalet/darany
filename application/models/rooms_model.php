@@ -75,6 +75,7 @@ class Rooms_model extends CI_Model {
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function get_room_from_timeslot($timeslot) {
+        $this->db->select('rooms.id');
         $this->db->select('mgr.email as manager_email');
         $this->db->select('mgr.language as manager_language');
         $this->db->select('usr.email as creator_email');
