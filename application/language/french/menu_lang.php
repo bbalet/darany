@@ -30,7 +30,7 @@ $lang['menu_admin_title'] = 'Admin';
 $lang['menu_admin_list_users'] = 'Liste des utilisateurs';
 $lang['menu_admin_add_user'] = 'Ajouter un utilisateur';
 
-$lang['menu_assets_title'] = 'Assets';
+$lang['menu_assets_title'] = 'Gestion';
 $lang['menu_assets_locations'] = 'Emplacements';
 
 $lang['menu_validation_title'] = 'Validation';

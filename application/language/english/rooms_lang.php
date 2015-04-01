@@ -85,3 +85,13 @@ $lang['rooms_book_button_book'] = 'Book the room';
 $lang['rooms_book_button_cancel'] = 'Cancel';
 $lang['rooms_book_flash_msg'] = 'The room has been succesfully booked.';
 $lang['rooms_book_flash_msg_error'] = 'The manager of this meeting room has been deleted.';
+
+$lang['rooms_status_title'] = 'Room status';
+$lang['rooms_status_msg_available'] = 'The room is free.';
+$lang['rooms_status_msg_no_timeslot'] = 'No future timeslot.';
+$lang['rooms_status_msg_next_timeslot'] = 'But next timeslot starts at';
+$lang['rooms_status_msg_not_available'] = 'The room is not available.';
+$lang['rooms_status_msg_booked_by'] = 'It has been booked by';
+$lang['rooms_status_msg_next_free'] = 'It will be free at';
+$lang['rooms_status_button_back'] = 'Back to the list of rooms';
+$lang['rooms_status_button_calendar'] = 'Calendar of the room';

@@ -102,7 +102,7 @@ class Rooms extends CI_Controller {
         $this->load->model('timeslots_model');
         $data['end_timeslot'] = $this->timeslots_model->end_full_timeslot($room);
         $data['next_timeslot'] = $this->timeslots_model->next_timeslot($room);
-        $data['title'] = lang('rooms_index_title');
+        $data['title'] = lang('rooms_status_title');
         $this->load->view('templates/header', $data);
         $this->load->view('menu/index', $data);
         $this->load->view('rooms/status', $data);

@@ -85,3 +85,13 @@ $lang['rooms_book_button_book'] = 'Réserver la salle';
 $lang['rooms_book_button_cancel'] = 'Annuler';
 $lang['rooms_book_flash_msg'] = 'La salle a été reservée avec succès.';
 $lang['rooms_book_flash_msg_error'] = 'Le manager de la salle de réunion a été supprimé.';
+
+$lang['rooms_status_title'] = 'Statut de la salle';
+$lang['rooms_status_msg_available'] = 'La salle est libre.';
+$lang['rooms_status_msg_no_timeslot'] = 'Pas de future réservation.';
+$lang['rooms_status_msg_next_timeslot'] = 'Mais la prochaine réservation est le';
+$lang['rooms_status_msg_not_available'] = 'La salle n\'est pas disponible.';
+$lang['rooms_status_msg_booked_by'] = 'Elle a été réservée par';
+$lang['rooms_status_msg_next_free'] = 'Elle sera libre le';
+$lang['rooms_status_button_back'] = 'Retour à la liste des salles';
+$lang['rooms_status_button_calendar'] = 'Calendrier des réservations';

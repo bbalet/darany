@@ -234,6 +234,7 @@ class Timeslots_model extends CI_Model {
     public function end_full_timeslot($room) {
         $this->db->select('status.name as status_name');
         $this->db->select('CONCAT_WS(\' \', users.firstname, users.lastname) as creator_name', FALSE);
+        $this->db->select('users.email as creator_email', FALSE);
         $this->db->select('timeslots.*');
         $this->db->join('status', 'status.id = timeslots.status');
         $this->db->join('users', 'users.id = timeslots.creator');

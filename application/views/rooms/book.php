@@ -41,7 +41,7 @@ echo form_open('rooms/book/' . $room['id'], $attributes); ?>
     <br /><br />
     <button id="send" class="btn btn-primary"><i class="icon-ok icon-white"></i>&nbsp;<?php echo lang('rooms_book_button_book');?></button>
     &nbsp;
-    <a href="<?php echo base_url(); ?>locations/<?php /*echo $location;*/ ?>/rooms" class="btn btn-danger"><i class="icon-remove icon-white"></i>&nbsp;<?php echo lang('rooms_book_button_cancel');?></a>
+    <a href="<?php echo base_url(); ?>locations/<?php echo $room['location_id']; ?>/rooms" class="btn btn-danger"><i class="icon-remove icon-white"></i>&nbsp;<?php echo lang('rooms_book_button_cancel');?></a>
 </form>
 
 <link rel="stylesheet" href="<?php echo base_url();?>assets/css/flick/jquery-ui-1.10.4.custom.min.css">
