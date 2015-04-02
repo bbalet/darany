@@ -141,7 +141,7 @@ class Rooms extends CI_Controller {
                 $this->sendMail($timeslot);
             }
             $this->session->set_flashdata('msg', lang('rooms_book_flash_msg'));
-            redirect('locations/' .  $data['room']['location_id'] . '/rooms');
+            redirect('timeslots/me');
         }
     }
     
