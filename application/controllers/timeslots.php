@@ -170,7 +170,7 @@ class Timeslots extends CI_Controller {
      * Display the form that allows to edit a timeslot
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
-    public function edit($room, $timeslot) {
+    public function edit($timeslot) {
         $this->auth->check_is_granted('timeslots_edit');
         $data = $this->getUserContext();
         $data['timeslot'] = $this->timeslots_model->get_timeslot($timeslot);
@@ -195,7 +195,7 @@ class Timeslots extends CI_Controller {
                 $this->sendMail($timeslot);
             }
             $this->session->set_flashdata('msg', lang('timeslots_edit_flash_msg'));
-            redirect('rooms/' . $room . '/timeslots');
+            redirect('rooms/' . $data['timeslot']['room_id'] . '/timeslots');
         }
     }
     

@@ -24,7 +24,7 @@
 $attributes = array('id' => 'target');
 
 //  'rooms/(:num)/timeslots/(:num)/edit
-echo form_open('rooms/' . $timeslot['room_id'] . '/timeslots/' . $timeslot['id'] . '/edit', $attributes); ?>
+echo form_open('timeslots/edit/'. $timeslot['id'], $attributes); ?>
     <input type="hidden" name="id" value="<?php echo $timeslot['id'];?>" />
 
     <label for="viz_startdate"><?php echo lang('timeslots_edit_field_startdate');?></label>
