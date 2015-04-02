@@ -51,7 +51,7 @@ echo form_open('timeslots/edit/'. $timeslot['id'], $attributes); ?>
     <br /><br />
     <button id="send" class="btn btn-primary"><i class="icon-ok icon-white"></i>&nbsp;<?php echo lang('timeslots_edit_button_book');?></button>
     &nbsp;
-    <a href="<?php echo base_url(); ?>locations/<?php /*echo $location;*/ ?>/rooms" class="btn btn-danger"><i class="icon-remove icon-white"></i>&nbsp;<?php echo lang('timeslots_edit_button_cancel');?></a>
+    <a href="<?php echo base_url(); ?>locations/<?php echo $timeslot['location_id'];?>/rooms" class="btn btn-danger"><i class="icon-remove icon-white"></i>&nbsp;<?php echo lang('timeslots_edit_button_cancel');?></a>
 </form>
 
 <link rel="stylesheet" href="<?php echo base_url();?>assets/css/flick/jquery-ui-1.10.4.custom.min.css">

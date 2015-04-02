@@ -157,6 +157,7 @@ class Timeslots_model extends CI_Model {
         $this->db->select('CONCAT_WS(\' \', usr.firstname, usr.lastname) as creator_name', FALSE);
         $this->db->select('rooms.id as room_id');
         $this->db->select('rooms.name as room_name');
+        $this->db->select('locations.id as location_id');
         $this->db->select('locations.name as location_name');
         $this->db->select('timeslots.*');
         $this->db->join('users usr', 'timeslots.creator = usr.id');
