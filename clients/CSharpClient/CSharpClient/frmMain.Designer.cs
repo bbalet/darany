@@ -34,16 +34,15 @@
             this.txtLogin = new System.Windows.Forms.TextBox();
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.tblLeaves = new System.Windows.Forms.DataGridView();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtBaseURL = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RoomLocation = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Manager = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RoomName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Floor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cmdIsAvailable = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtBaseURL = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.tblLeaves)).BeginInit();
             this.SuspendLayout();
             // 
@@ -111,33 +110,6 @@
             this.tblLeaves.Size = new System.Drawing.Size(647, 195);
             this.tblLeaves.TabIndex = 5;
             this.tblLeaves.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.tblLeaves_CellDoubleClick);
-            this.tblLeaves.SelectionChanged += new System.EventHandler(this.tblLeaves_SelectionChanged);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(19, 8);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(56, 13);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Base URL";
-            // 
-            // txtBaseURL
-            // 
-            this.txtBaseURL.Location = new System.Drawing.Point(103, 1);
-            this.txtBaseURL.Name = "txtBaseURL";
-            this.txtBaseURL.Size = new System.Drawing.Size(363, 20);
-            this.txtBaseURL.TabIndex = 7;
-            this.txtBaseURL.Text = "http://localhost/darany/api/";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(16, 287);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(342, 13);
-            this.label4.TabIndex = 8;
-            this.label4.Text = "Double-click on a row so as to see the timeslots associated to this room";
             // 
             // Id
             // 
@@ -169,23 +141,37 @@
             this.Description.HeaderText = "Description";
             this.Description.Name = "Description";
             // 
-            // cmdIsAvailable
+            // label3
             // 
-            this.cmdIsAvailable.Enabled = false;
-            this.cmdIsAvailable.Location = new System.Drawing.Point(313, 50);
-            this.cmdIsAvailable.Name = "cmdIsAvailable";
-            this.cmdIsAvailable.Size = new System.Drawing.Size(75, 23);
-            this.cmdIsAvailable.TabIndex = 9;
-            this.cmdIsAvailable.Text = "Is Free?";
-            this.cmdIsAvailable.UseVisualStyleBackColor = true;
-            this.cmdIsAvailable.Click += new System.EventHandler(this.cmdIsAvailable_Click);
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(19, 8);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(56, 13);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Base URL";
+            // 
+            // txtBaseURL
+            // 
+            this.txtBaseURL.Location = new System.Drawing.Point(103, 1);
+            this.txtBaseURL.Name = "txtBaseURL";
+            this.txtBaseURL.Size = new System.Drawing.Size(363, 20);
+            this.txtBaseURL.TabIndex = 7;
+            this.txtBaseURL.Text = "http://localhost/darany/api/";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(16, 287);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(342, 13);
+            this.label4.TabIndex = 8;
+            this.label4.Text = "Double-click on a row so as to see the timeslots associated to this room";
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(701, 312);
-            this.Controls.Add(this.cmdIsAvailable);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.txtBaseURL);
             this.Controls.Add(this.label3);
@@ -220,7 +206,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn RoomName;
         private System.Windows.Forms.DataGridViewTextBoxColumn Floor;
         private System.Windows.Forms.DataGridViewTextBoxColumn Description;
-        private System.Windows.Forms.Button cmdIsAvailable;
     }
 }
 

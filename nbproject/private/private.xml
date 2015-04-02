@@ -4,9 +4,9 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/wamp/www/darany/application/config/routes.php</file>
-            <file>file:/C:/wamp/www/darany/application/views/rooms/status.php</file>
-            <file>file:/C:/wamp/www/darany/application/language/french/rooms_lang.php</file>
-            <file>file:/C:/wamp/www/darany/application/language/english/rooms_lang.php</file>
+            <file>file:/C:/wamp/www/darany/application/controllers/timeslots.php</file>
+            <file>file:/C:/wamp/www/darany/application/controllers/rooms.php</file>
+            <file>file:/C:/wamp/www/darany/sql/darany.sql</file>
         </group>
     </open-files>
 </project-private>

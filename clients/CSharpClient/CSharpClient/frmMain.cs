@@ -82,56 +82,5 @@ namespace CSharpClient
             }
         }
 
-        private void cmdIsAvailable_Click(object sender, EventArgs e)
-        {
-            using (WebClient l_objClient = new WebClient())
-            {
-                l_objClient.BaseAddress = txtBaseURL.Text;
-                //Get the room id from the selected line
-                int l_intRoomID = (int) tblLeaves.SelectedRows[0].Cells[0].Value;
-                string l_strStatusURL = "rooms/" + l_intRoomID + "/status";
-                try
-                {
-                    byte[] l_objResponse = l_objClient.UploadValues(l_strStatusURL, new NameValueCollection()
-                   {
-                       { "login", txtLogin.Text },
-                       { "password", txtPassword.Text }
-                   });
-                    string l_strResult = System.Text.Encoding.UTF8.GetString(l_objResponse);
-                    Availability l_objAvailability = JsonConvert.DeserializeObject<Availability>(l_strResult);
-                    string l_strMessage = "The room #" + l_intRoomID + " is ";
-                    if (l_objAvailability.IsFree)
-                    {
-                        l_strMessage += "available.\n";
-                        if (l_objAvailability.NextState != null)
-                            l_strMessage += "But it will be no more available on " + l_objAvailability.NextState.ToString();
-                    }
-                    else
-                    {
-                        l_strMessage += "already booked.\n";
-                        if (l_objAvailability.NextState != null)
-                            l_strMessage += "But it will available on " + l_objAvailability.NextState.ToString();
-                    }
-                    MessageBox.Show(l_strMessage);
-                }
-                catch (WebException l_objException)
-                {
-                    MessageBox.Show(l_objException.Message);
-                }
-            }
-
-        }
-
-        private void tblLeaves_SelectionChanged(object sender, EventArgs e)
-        {
-            if (tblLeaves.SelectedRows.Count > 0)
-            {
-                cmdIsAvailable.Enabled = true;
-            }
-            else
-            {
-                cmdIsAvailable.Enabled = false;
-            }
-        }
     }
 }

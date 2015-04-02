@@ -62,7 +62,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Availability.cs" />
     <Compile Include="Room.cs" />
     <Compile Include="frmTimeslotsView.cs">
       <SubType>Form</SubType>
