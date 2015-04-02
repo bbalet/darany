@@ -42,6 +42,23 @@ CREATE TABLE IF NOT EXISTS `timeslots` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
+-- Structure of table `locations`
+--
+CREATE TABLE IF NOT EXISTS `locations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) NOT NULL,
+  `address` text DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+--
+-- Content of table `locations`
+--
+INSERT INTO `locations` (`id`, `name`, `address`, `description`) VALUES
+(1, 'PNC', 'PP', 'PNC Premises');
+
+--
 -- Structure of table `rooms`
 --
 CREATE TABLE IF NOT EXISTS `rooms` (
@@ -55,15 +72,12 @@ CREATE TABLE IF NOT EXISTS `rooms` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
--- Structure of table `locations`
+-- Content of table `rooms`
 --
-CREATE TABLE IF NOT EXISTS `locations` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) NOT NULL,
-  `address` text DEFAULT NULL,
-  `description` text DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+INSERT INTO `rooms` (`id`, `location`, `manager`, `name`, `floor`, `description`) VALUES
+(1, 1, 1, 'B11', 1, 'B11 Classroom'),
+(2, 1, 1, 'B21', 2, 'B21 Lab'),
+(3, 1, 1, 'B22', 2, 'B22 Lab');
 
 --
 -- Structure of table `roles`
