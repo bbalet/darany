@@ -53,8 +53,10 @@ $(document).ready(function() {
         <td data-order="<?php echo $location['id']; ?>">
             <?php echo $location['id'];?>
             <div class="pull-right">
+                <?php if ($is_admin == TRUE) { ?>
                 <a href="#" class="confirm-delete" data-id="<?php echo $location['id'];?>" title="<?php echo lang('locations_index_thead_tip_delete');?>"><i class="icon-trash"></i></a>&nbsp; 
                 <a href="<?php echo base_url();?>locations/edit/<?php echo $location['id']; ?>" title="<?php echo lang('locations_index_thead_tip_edit');?>"><i class="icon-pencil"></i></a>
+                <?php } ?>
                 <a href="<?php echo base_url();?>locations/<?php echo $location['id']; ?>/rooms"><?php echo lang('locations_index_thead_link_rooms');?></a>&nbsp;
             </div>
         </td>
@@ -77,7 +79,9 @@ $(document).ready(function() {
       <a href="<?php echo base_url();?>locations/export" class="btn btn-primary"><i class="icon-file icon-white"></i>&nbsp;<?php echo lang('locations_index_button_export');?></a>
     </div>
     <div class="span3">
-      <a href="<?php echo base_url();?>locations/create" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i>&nbsp;<?php echo lang('locations_index_button_create');?></a>
+    <?php if ($is_admin == TRUE) { ?>          
+        <a href="<?php echo base_url();?>locations/create" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i>&nbsp;<?php echo lang('locations_index_button_create');?></a>
+    <?php } ?>
     </div>
     <div class="span7">&nbsp;</div>
 </div>

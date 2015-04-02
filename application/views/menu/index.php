@@ -52,7 +52,6 @@ $this->lang->load('menu', $language);?>
                 <span class="icon-bar"></span>
               </a>
             <div class="nav-collapse">
-                
               <?php if ($is_admin == TRUE) { ?>
               <ul class="nav">			  
                 <li class="dropdown">
@@ -64,8 +63,6 @@ $this->lang->load('menu', $language);?>
                 </li>
               </ul>
               <?php } ?>
-
-              <?php if ($is_admin == TRUE) { ?>
               <ul class="nav">			  
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo lang('menu_assets_title');?> <b class="caret"></b></a>
@@ -74,7 +71,6 @@ $this->lang->load('menu', $language);?>
                   </ul>
                 </li>
               </ul>
-              <?php } ?>
              <ul class="nav">			  
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo lang('menu_validation_title');?> <b class="caret"></b></a>
@@ -83,7 +79,6 @@ $this->lang->load('menu', $language);?>
                   </ul>
                 </li>
               </ul>
-              
               <ul class="nav">			  
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo lang('menu_booking_title');?> <b class="caret"></b></a>

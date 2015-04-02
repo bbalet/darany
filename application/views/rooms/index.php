@@ -54,8 +54,10 @@ $(document).ready(function() {
         <td data-order="<?php echo $room['id']; ?>">
             <?php echo $room['id'];?>
             <div class="pull-right">
+                <?php if ($is_admin == TRUE) { ?>
                 <a href="#" class="confirm-delete" data-id="<?php echo $room['id'];?>" title="<?php echo lang('rooms_index_tooltip_delete');?>"><i class="icon-trash"></i></a>&nbsp; 
                 <a href="<?php echo base_url();?>locations/<?php echo $location['id']; ?>/rooms/<?php echo $room['id']; ?>/edit" title="<?php echo lang('rooms_index_tooltip_edit');?>"><i class="icon-pencil"></i></a>
+                <?php } ?>
                 <a href="<?php echo base_url();?>rooms/<?php echo $room['id'];?>/timeslots" title="<?php echo lang('rooms_index_tooltip_timeslot');?>"><i class="icon-list-alt"></i></a>&nbsp;
                 <a href="<?php echo base_url();?>rooms/calendar/<?php echo $room['id'];?>" title="<?php echo lang('rooms_index_tooltip_calendar');?>"><i class="icon-calendar"></i></a>&nbsp;
                 <a href="#" class="qrcode-modal" data-id="<?php echo $room['id'];?>" role="button" data-toggle="modal" title="<?php echo lang('rooms_index_tooltip_qrcode');?>"><i class="icon-qrcode"></i></a>&nbsp;
@@ -64,7 +66,7 @@ $(document).ready(function() {
                 <a href="<?php echo base_url();?>rooms/status/<?php echo $room['id'];?>" title="<?php echo lang('rooms_index_tooltip_available');?>"><i class="icon-ok-circle"></i></a>&nbsp;
                 <?php } else { ?>
                 <a href="<?php echo base_url();?>rooms/status/<?php echo $room['id'];?>" title="<?php echo lang('rooms_index_tooltip_booked');?>"><i class="icon-ban-circle"></i></a>&nbsp;
-                 <?php } ?>
+                <?php } ?>
                 
             </div>
         </td>
@@ -113,7 +115,9 @@ $(document).ready(function() {
     <div class="span12">
       <a href="<?php echo base_url();?>locations" class="btn btn-primary"><i class="icon-arrow-left icon-white"></i>&nbsp;<?php echo lang('rooms_index_button_back');?></a>&nbsp;
       <a href="<?php echo base_url();?>locations/<?php echo $location['id']; ?>/rooms/export" class="btn btn-primary"><i class="icon-file icon-white"></i>&nbsp;<?php echo lang('rooms_index_button_export');?></a>&nbsp;
+      <?php if ($is_admin == TRUE) { ?>
       <a href="<?php echo base_url();?>locations/<?php echo $location['id']; ?>/rooms/create" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i>&nbsp;<?php echo lang('rooms_index_button_create');?></a>
+      <?php } ?>
     </div>
 </div>
 

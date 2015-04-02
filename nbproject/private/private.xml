@@ -3,13 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp/www/darany/application/libraries/Auth.php</file>
-            <file>file:/C:/wamp/www/darany/application/controllers/locations.php</file>
-            <file>file:/C:/wamp/www/darany/application/views/timeslots/edit.php</file>
-            <file>file:/C:/wamp/www/darany/application/models/rooms_model.php</file>
-            <file>file:/C:/wamp/www/darany/application/controllers/timeslots.php</file>
-            <file>file:/C:/wamp/www/darany/application/models/timeslots_model.php</file>
-            <file>file:/C:/wamp/www/darany/application/controllers/rooms.php</file>
+            <file>file:/C:/wamp/www/darany/application/config/routes.php</file>
+            <file>file:/C:/wamp/www/darany/application/views/rooms/status.php</file>
+            <file>file:/C:/wamp/www/darany/application/language/french/rooms_lang.php</file>
+            <file>file:/C:/wamp/www/darany/application/language/english/rooms_lang.php</file>
         </group>
     </open-files>
 </project-private>
