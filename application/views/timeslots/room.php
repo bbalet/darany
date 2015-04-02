@@ -62,7 +62,7 @@ $(document).ready(function() {
         <td data-order="<?php echo $timeslot['id']; ?>">
             <?php echo $timeslot['id']; ?>
             <div class="pull-right">
-                <a href="<?php echo base_url();?>rooms/<?php echo $room['id']; ?>/timeslots/<?php echo $timeslot['id']; ?>/edit" title="<?php echo lang('timeslots_room_tooltip_edit');?>"><i class="icon-pencil"></i></a>
+                <a href="<?php echo base_url();?>timeslots/edit/<?php echo $timeslot['id']; ?>" title="<?php echo lang('timeslots_room_tooltip_edit');?>"><i class="icon-pencil"></i></a>
                 &nbsp;
                 <a href="#" class="confirm-delete" data-id="<?php echo $timeslot['id'];?>" title="<?php echo lang('timeslots_room_tooltip_delete');?>"><i class="icon-trash"></i></a>
             </div>
