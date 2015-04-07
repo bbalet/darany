@@ -84,7 +84,7 @@ class Locations extends CI_Controller {
         $data = $this->getUserContext();
         $this->load->helper('form');
         $this->load->library('form_validation');
-        $data['title'] = lang('hr_leaves_popup_create_title');
+        $data['title'] = lang('locations_create_title');
         
         $this->form_validation->set_rules('name', lang('locations_create_field_name'), 'required|xss_clean');
         $this->form_validation->set_rules('description', lang('locations_create_field_description'), 'xss_clean');
@@ -111,7 +111,7 @@ class Locations extends CI_Controller {
         $data = $this->getUserContext();
         $this->load->helper('form');
         $this->load->library('form_validation');
-        $data['title'] = lang('hr_leaves_popup_update_title');
+        $data['title'] = lang('locations_edit_title') . $id;
         
         $this->form_validation->set_rules('name', lang('locations_edit_field_name'), 'required|xss_clean');
         $this->form_validation->set_rules('description', lang('locations_edit_field_description'), 'xss_clean');

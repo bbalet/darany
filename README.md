@@ -1,14 +1,16 @@
-** THIS PROJECT IS NOT SUITABLE FOR PRODUCTION**
+**THIS PROJECT IS NOT SUITABLE FOR PRODUCTION**
 
 The objective of this project is to provide training materials for the NGO Passerelles numériques http://passerellesnumeriques.org/en/
 
 ## Features
 
+Darany is a basic meeting room booking management system:
+
 * User management.
 * Notifications by e-mail (requested, accepted, rejected and new user).
 * Meeting room booking workflow.
 * Export to Excel in a click.
-* Create a QR-Code for a meeting room.
+* Create a QR-Code for a meeting room (get the status).
 * Calendars of meeting room availability.
 * Available in English and French.
 * Simplified REST API with a .Net client.
@@ -21,9 +23,10 @@ We thank the following open source projects for the components used by Darany:
 
 #### Backend
 
-* CodeIgniter MVC framework http://ellislab.com/codeigniter
+* CodeIgniter MVC framework http://www.codeigniter.com/
 * BCRYPT password hasher https://github.com/dwightwatson/codeigniter-bcrypt
 * Excel import/export https://github.com/PHPOffice/PHPExcel
+* phpqrcode https://github.com/t0k4rt/phpqrcode
 
 #### Frontend
 

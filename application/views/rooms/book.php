@@ -77,6 +77,8 @@ if ($language_code != 'en') { ?>
             },
             onSelect: function (selectedDateTime){
                     endDateTextBox.datetimepicker('option', 'minDate', startDateTextBox.datetimepicker('getDate') );
+                    $('#viz_startdate').datepicker('setDate', this.value).show();
+                    $('#viz_enddate').datepicker('setDate', this.value).show();
             }
         });
         endDateTextBox.datetimepicker({ 
@@ -98,6 +100,8 @@ if ($language_code != 'en') { ?>
             },
             onSelect: function (selectedDateTime){
                     startDateTextBox.datetimepicker('option', 'maxDate', endDateTextBox.datetimepicker('getDate') );
+                    $('#viz_startdate').datepicker('setDate', this.value).show();
+                    $('#viz_enddate').datepicker('setDate', this.value).show();
             }
         });
     });

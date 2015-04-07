@@ -20,8 +20,6 @@ if (!defined('BASEPATH')) {
  * along with darany. If not, see <http://www.gnu.org/licenses/>.
  */
 
-if (!defined('BASEPATH')) exit('No direct script access allowed');
-
 class Timeslots extends CI_Controller {
     
     /**
@@ -60,35 +58,6 @@ class Timeslots extends CI_Controller {
         $data['language'] = $this->language;
         $data['language_code'] =  $this->language_code;
         return $data;
-    }
-
-    /**
-     * Display the list of timeslots for a room
-     * Status is submitted
-     * @author Benjamin BALET <benjamin.balet@gmail.com>
-     */
-    public function requested($filter = 'requested') {
-        $this->auth->check_is_granted('timeslots_list');
-        $this->expires_now();
-        if ($filter == 'all') {
-            $showAll = true;
-        } else {
-            $showAll = false;
-        }
-        
-        $data = $this->getUserContext();
-        $data['filter'] = $filter;
-        $data['title'] = lang('requests_index_title');
-        $data['requests'] = $this->leaves_model->requests($this->user_id, $showAll);
-        
-        $this->load->model('types_model');
-        for ($i = 0; $i < count($data['requests']); ++$i) {
-            $data['requests'][$i]['type_label'] = $this->types_model->get_label($data['requests'][$i]['type']);
-        }
-        $this->load->view('templates/header', $data);
-        $this->load->view('menu/index', $data);
-        $this->load->view('requests/index', $data);
-        $this->load->view('templates/footer');
     }
 
     /**
@@ -151,7 +120,7 @@ class Timeslots extends CI_Controller {
     }
     
     /**
-     * Display the list of timeslots booked by the connected user
+     * Display the list of timeslots to be validated by the connected user
      * @author Benjamin BALET <benjamin.balet@gmail.com>
      */
     public function validation() {
@@ -256,7 +225,6 @@ class Timeslots extends CI_Controller {
             redirect('timeslots/validation');
         }
     }
-    
 
     /**
      * Send a confirmation email to the employee that requested the room
@@ -302,7 +270,7 @@ class Timeslots extends CI_Controller {
         if ($this->config->item('from_mail') != FALSE && $this->config->item('from_name') != FALSE ) {
            $this->email->from($this->config->item('from_mail'), $this->config->item('from_name'));
         } else {
-           $this->email->from('do.not@reply.me', 'LMS');
+           $this->email->from('do.not@reply.me', 'Darany');
         }
         $this->email->to($timeslot['creator_email']);
         $this->email->message($message);

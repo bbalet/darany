@@ -15,7 +15,7 @@
 |
 */
 $config['base_url']	= '';
-//If you are using LMS with Nginx on HTTP protocol
+//If you are using Darany with Nginx on HTTP protocol
 //$_SERVER['HTTPS'] = 'off';
 
 /*
@@ -357,7 +357,7 @@ $config['proxy_ips'] = '';
 
 /*
 |--------------------------------------------------------------------------
-| LMS application settings
+| Darany application settings
 |--------------------------------------------------------------------------
 |
 | 
@@ -369,14 +369,6 @@ $config['proxy_ips'] = '';
 //default email from
 $config['from_mail'] = 'do.not@reply.me';
 $config['from_name'] = 'Darany Software';
-
-//Password minimal length
-$config['password_length'] = 8;
-//Default role id (e.g. 2 for user)
-$config['default_role_id'] = 2;
-
-//Set this value to TRUE if you want to create leaves at status requested instead of planned
-$config['leave_status_requested'] = FALSE;
 
 //List of available languages
 $config['languages'] = 'en,fr';

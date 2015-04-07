@@ -153,22 +153,5 @@ class Rooms_model extends CI_Model {
         $this->db->delete('rooms', array('id' => $id));
         $this->db->delete('timeslots', array('room' => $id));
     }
-    
-    /**
-     * Update a given position in the database. Update data are coming from an
-     * HTML form
-     * @param int $id Identifier of the database
-     * @return type
-     * @author Benjamin BALET <benjamin.balet@gmail.com>
-     */
-    public function update_positions($id) {
-        $data = array(
-            'name' => $this->input->post('name'),
-            'description' => $this->input->post('description')
-        );
-
-        $this->db->where('id', $id);
-        return $this->db->update('positions', $data);
-    }
 }
 	

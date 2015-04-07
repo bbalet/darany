@@ -214,7 +214,7 @@ class Rooms extends CI_Controller {
         $data = $this->getUserContext();
         $this->load->helper('form');
         $this->load->library('form_validation');
-        $data['title'] = lang('positions_edit_title');
+        $data['title'] = lang('rooms_edit_title');
         $data['room'] = $this->rooms_model->get_room($room);
         
         $this->form_validation->set_rules('name', lang('rooms_create_field_name'), 'required|xss_clean');

@@ -85,6 +85,8 @@ $(document).ready(function() {
 
 <div class="row-fluid">
     <div class="span12">
+      <a href="<?php echo base_url();?>locations/<?php echo $room['location_id']; ?>/rooms" class="btn btn-primary"><i class="icon-arrow-left icon-white"></i>&nbsp; <?php echo lang('timeslots_room_button_back');?></a>
+      &nbsp;
       <a href="<?php echo base_url();?>rooms/book/<?php echo $room['id']; ?>" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i>&nbsp; <?php echo lang('timeslots_room_button_create');?></a>
     </div>
 </div>
@@ -146,7 +148,7 @@ $(document).ready(function() {
         $("#lnkDeleteBooking").attr('href', link);
     });
     
-    //Display a modal pop-up so as to confirm if a leave request has to be deleted or not
+    //Display a modal pop-up so as to confirm if a room has to be deleted or not
     //We build a complex selector because datatable does horrible things on DOM...
     //a simplier selector doesn't work when the delete is on page >1 
     $("#timeslots tbody").on('click', '.confirm-delete',  function(){

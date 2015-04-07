@@ -216,7 +216,7 @@ class Users extends CI_Controller {
                 if ($this->config->item('from_mail') != FALSE && $this->config->item('from_name') != FALSE ) {
                     $this->email->from($this->config->item('from_mail'), $this->config->item('from_name'));
                 } else {
-                    $this->email->from('do.not@reply.me', 'LMS');
+                    $this->email->from('do.not@reply.me', 'Darany');
                 }
                 $this->email->to($user['email']);
                 $this->email->subject(lang('email_password_reset_subject'));
@@ -289,7 +289,7 @@ class Users extends CI_Controller {
             if ($this->config->item('from_mail') != FALSE && $this->config->item('from_name') != FALSE ) {
                 $this->email->from($this->config->item('from_mail'), $this->config->item('from_name'));
             } else {
-               $this->email->from('do.not@reply.me', 'LMS');
+               $this->email->from('do.not@reply.me', 'Darany');
             }
             $this->email->to($this->input->post('email'));
             $this->email->subject(lang('email_user_create_subject'));

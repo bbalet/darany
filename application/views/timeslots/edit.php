@@ -51,7 +51,11 @@ echo form_open('timeslots/edit/'. $timeslot['id'], $attributes); ?>
     <br /><br />
     <button id="send" class="btn btn-primary"><i class="icon-ok icon-white"></i>&nbsp;<?php echo lang('timeslots_edit_button_book');?></button>
     &nbsp;
+    <?php if (empty($_GET["source"])) { ?>
     <a href="<?php echo base_url(); ?>locations/<?php echo $timeslot['location_id'];?>/rooms" class="btn btn-danger"><i class="icon-remove icon-white"></i>&nbsp;<?php echo lang('timeslots_edit_button_cancel');?></a>
+    <?php } else { ?>
+    <a href="<?php echo base_url() . $_GET["source"]; ?>" class="btn btn-danger"><i class="icon-remove icon-white"></i>&nbsp;<?php echo lang('timeslots_edit_button_cancel');?></a>
+    <?php } ?>
 </form>
 
 <link rel="stylesheet" href="<?php echo base_url();?>assets/css/flick/jquery-ui-1.10.4.custom.min.css">
@@ -87,6 +91,8 @@ if ($language_code != 'en') { ?>
             },
             onSelect: function (selectedDateTime){
                     endDateTextBox.datetimepicker('option', 'minDate', startDateTextBox.datetimepicker('getDate') );
+                    $('#viz_startdate').datepicker('setDate', this.value).show();
+                    $('#viz_enddate').datepicker('setDate', this.value).show();
             }
         });
         endDateTextBox.datetimepicker({ 
@@ -108,6 +114,8 @@ if ($language_code != 'en') { ?>
             },
             onSelect: function (selectedDateTime){
                     startDateTextBox.datetimepicker('option', 'maxDate', endDateTextBox.datetimepicker('getDate') );
+                    $('#viz_startdate').datepicker('setDate', this.value).show();
+                    $('#viz_enddate').datepicker('setDate', this.value).show();
             }
         });
     });

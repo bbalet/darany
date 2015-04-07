@@ -26,7 +26,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Structure of table `leaves`
+-- Structure of table `timeslots`
 --
 CREATE TABLE IF NOT EXISTS `timeslots` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -133,7 +133,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 INSERT INTO `users` (`id`, `firstname`, `lastname`, `login`, `email`, `password`, `role`, `language`) VALUES
 (1, 'Benjamin', 'BALET', 'bbalet', 'benjamin.balet@gmail.com', '$2a$08$LeUbaGFqJjLSAN7to9URsuHB41zcmsMBgBhpZuFp2y2OTxtVcMQ.C', 1, 'en'),
-(2, 'John', 'DOE', 'jdoe', 'jdoe@lms.org', '$2a$08$Vk8FdteT25t.3Q9yU6pZWOCkc3rvXYc5jfV4Wq4b3Tg4WwwomeiJO', 2, 'en');
+(2, 'John', 'DOE', 'jdoe', 'jdoe@darany.org', '$2a$08$Vk8FdteT25t.3Q9yU6pZWOCkc3rvXYc5jfV4Wq4b3Tg4WwwomeiJO', 2, 'en');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

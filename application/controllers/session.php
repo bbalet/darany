@@ -20,9 +20,6 @@ if (!defined('BASEPATH')) {
  * along with darany. If not, see <http://www.gnu.org/licenses/>.
  */
 
-if (!defined('BASEPATH'))
-    exit('No direct script access allowed');
-
 class Session extends CI_Controller {
 
     /**
@@ -143,7 +140,7 @@ class Session extends CI_Controller {
             if ($this->config->item('from_mail') != FALSE && $this->config->item('from_name') != FALSE ) {
                 $this->email->from($this->config->item('from_mail'), $this->config->item('from_name'));
             } else {
-               $this->email->from('do.not@reply.me', 'LMS');
+               $this->email->from('do.not@reply.me', 'Darany');
             }
             $this->email->to($user->email);
             $this->email->subject(lang('email_password_forgotten_subject'));

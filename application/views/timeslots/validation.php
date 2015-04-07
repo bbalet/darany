@@ -146,7 +146,7 @@ $(document).ready(function() {
         $("#lnkDeleteBooking").attr('href', link);
     });
     
-    //Display a modal pop-up so as to confirm if a leave request has to be deleted or not
+    //Display a modal pop-up so as to confirm if a booking request has to be deleted or not
     //We build a complex selector because datatable does horrible things on DOM...
     //a simplier selector doesn't work when the delete is on page >1 
     $("#timeslots tbody").on('click', '.confirm-delete',  function(){
